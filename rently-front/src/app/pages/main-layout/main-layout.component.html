@@ -1,0 +1,116 @@
+<div class="background-img">
+<div id="main" class="layout-box">
+  <div class="top-bar">
+    <nav class="d-flex navbar navbar-dark header">
+      <div class="justify-content-start">
+        <button class="navbar-toggler collapsed" type="button"  aria-expanded="false" aria-label="Toggle navigation" (click)="openOverlay()">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class="ml-3 navbar-brand" routerLink="/" (click)="closeOverlay()">
+          <img src="assets/logo-light.png" style="height: 42px">
+        </a>
+      </div>
+
+      <div>
+        <button type="button" class="btn btn-link" data-toggle="modal" data-target="#SignUpModal">Sign up</button>
+        <button type="button" class="btn btn-link" data-toggle="modal" data-target="#LogInModal">Log in</button>
+      </div>
+
+    </nav>
+
+    <div id="mySidebar" class="sidebar">
+      <a href="#">Services</a>
+      <a href="#">Clients</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+
+  <div class="page-content main">
+    <router-outlet></router-outlet>
+  </div>
+
+</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="SignUpModal" tabindex="-1" role="dialog" aria-labelledby="SignUpModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="SignUpModalTitle">Sign up</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="md-float-material form-material" #signUpForm="ngForm" (ngSubmit)="signUp(signUpForm)">
+          <div class="auth-box card">
+            <div class="card-block">
+              <div class="form-group form-primary"> <input #name1="ngModel" type="text" class="form-control" name="name" [ngModel]="name" required value="" placeholder="Display name"> </div>
+              <p [hidden]="!(name1.touched && name1.invalid)" class="invalid">*Must be filled</p>
+              <div class="form-group form-primary"> <input #email_input1="ngModel" type="email" class="form-control" name="email" [ngModel]="email" required email value="" placeholder="Email"> </div>
+              <p [hidden]="!(email_input1.touched && email_input1.invalid)" class="invalid">*Must be filled as email (for example: your_email@email.com)</p>
+              <div class="form-group form-primary"> <input #password_input1="ngModel" type="password" class="form-control" name="password" [ngModel]="password" required minlength="6" placeholder="Password" value=""> </div>
+              <p [hidden]="!(password_input1.touched && password_input1.invalid)" class="invalid">*Must contain at least 6 characters</p>
+              <div class="row">
+                <div class="col-md-12" data-dismiss="modal">
+                  <input type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20" (click)="signUp(signUpForm)" [disabled]="!signUpForm.valid" name="submit" value="Sign up Now">
+                </div>
+              </div>
+              <div class="or-container">
+                <div class="line-separator"></div>
+                <div class="or-label">or</div>
+                <div class="line-separator"></div>
+              </div>
+              <div class="row">
+                <div class="col-md-12"> <a class="btn btn-lg btn-google btn-block text-uppercase btn-outline" (click)="authService.GoogleAuth()" data-dismiss="modal"><img src="https://img.icons8.com/color/16/000000/google-logo.png"> Sign up with Google</a> </div>
+              </div> <br>
+              <p class="text-inverse text-center">Already have an account? <a href="<?= base_url() ?>auth/login" data-abc="true" data-dismiss="modal" data-toggle="modal" data-target="#LogInModal">Log in</a></p>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="LogInModal" tabindex="-1" role="dialog" aria-labelledby="LogInModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="LogInModalTitle">Log in</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="md-float-material form-material" #logInForm="ngForm" (ngSubmit)="logIn(logInForm)">
+          <div class="auth-box card">
+            <div class="card-block">
+              <div class="form-group form-primary"> <input #email_input="ngModel" type="email" class="form-control" name="email" [ngModel]="email" required email value="" placeholder="Email"> </div>
+              <p [hidden]="!(email_input.touched && email_input.invalid)" class="invalid">*Must be filled as email (for example: your_email@email.com)</p>
+              <div class="form-group form-primary"> <input #password_input="ngModel" type="password" class="form-control" name="password" [ngModel]="password" required minlength="6" placeholder="Password" value=""> </div>
+              <p [hidden]="!(password_input.touched && password_input.invalid)" class="invalid">*Must contain at least 6 characters</p>
+              <div class="row">
+                <div class="col-md-12" data-dismiss="modal">
+                  <input type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20" (click)="logIn(logInForm)" [disabled]="!logInForm.valid" name="submit" value="Log in Now">
+                </div>
+              </div>
+              <div class="or-container">
+                <div class="line-separator"></div>
+                <div class="or-label">or</div>
+                <div class="line-separator"></div>
+              </div>
+              <div class="row">
+                <div class="col-md-12"> <a class="btn btn-lg btn-google btn-block text-uppercase btn-outline" (click)="authService.GoogleAuth()" data-dismiss="modal"><img src="https://img.icons8.com/color/16/000000/google-logo.png"> Log in with Google</a> </div>
+              </div> <br>
+              <p class="text-inverse text-center">Don`t have account yet? <a href="<?= base_url() ?>auth/login" data-abc="true" data-dismiss="modal" data-toggle="modal" data-target="#SignUpModal">Sign up</a></p>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

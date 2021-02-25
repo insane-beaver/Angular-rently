@@ -1,0 +1,185 @@
+@import "src/styles"
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap')
+
+.main-content
+  min-height: 92vh
+  background: $white //rgba($white, 0.2)
+
+
+body
+  background-color: #eeeeee
+  font-family: 'Open Sans', serif
+  font-size: 14px
+
+.filter-group
+  border-bottom: 1px solid #e4e4e4
+
+.card
+  position: relative
+  display: -webkit-box
+  display: -ms-flexbox
+  display: flex
+  -webkit-box-orient: vertical
+  -webkit-box-direction: normal
+  -ms-flex-direction: column
+  flex-direction: column
+  min-width: 0
+  word-wrap: break-word
+  background-color: #fff
+  background-clip: border-box
+  border: 1px solid rgba(0, 0, 0, 0.1)
+  border-radius: 0.37rem
+
+.card-header
+  padding: 0.75rem 1.25rem
+  margin-bottom: 0
+  background-color: #fff
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1)
+
+.card-body
+  margin-top: -3vh
+
+.filter-group .card-header
+  border-bottom: 0
+
+.icon-control
+  margin-top: 6px
+  float: right
+  font-size: 80px
+
+.list-menu
+  list-style: none
+  margin: 0
+  padding-left: 0
+
+.list-menu a
+  color: $dark-blue
+
+a
+  text-decoration: none !important
+  background-color: transparent
+
+.checkbox-btn
+  position: relative
+
+.checkbox-btn input
+  position: absolute
+  z-index: -1
+  opacity: 0
+
+.checkbox-btn input:checked~.btn
+  border-color: $orange
+  background-color: $orange
+
+.btn-light
+  display: inline-block
+  font-weight: 600
+  color: #343a40
+  text-align: center
+  vertical-align: middle
+  user-select: none
+  background-color: #eee
+  border: 1px solid #eee
+  padding: 0.45rem 0.85rem
+  font-size: 10px
+  line-height: 1.5
+  border-radius: 0.37rem
+
+.btn-light:hover
+  background-color: #fff
+  border-color: #989898
+
+.btn-medium
+  font-size: 12px
+  padding: 10px 22px
+  display: inline-block
+  margin-right: 20px
+  letter-spacing: 2px
+  border: 1px solid $orange
+  width: 100%
+
+.highlight-button:hover
+  background-color: $orange
+  border: 2px solid $orange
+  color: #fff
+
+.custom-control
+  position: relative
+  display: block
+  min-height: 1.5rem
+  padding-left: 1.5rem
+
+
+.dollar
+  display: inline-block
+  position: relative
+
+.dollar input
+  padding-left: 15px
+
+.dollar:before
+  position: absolute
+  content: "$"
+  left: 5px
+  top: 2px
+
+
+/* Customize the label (the container) */
+.container
+  display: block
+  position: relative
+  padding-left: 20px
+  margin-bottom: 5px
+  cursor: pointer
+  font-size: 16px
+  user-select: none
+
+/* Hide the browser's default checkbox */
+.container input
+  position: absolute
+  opacity: 0
+  cursor: pointer
+  height: 0
+  width: 0
+
+/* Create a custom checkbox */
+.checkmark
+  position: absolute
+  top: 5px
+  left: 0
+  height: 16px
+  width: 16px
+  background-color: #eee
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark
+  background-color: #ccc
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark
+  background-color: $orange
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after
+  content: ""
+  position: absolute
+  display: none
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after
+  display: block
+
+/* Style the checkmark/indicator */
+.container .checkmark:after
+  left: 6px
+  top: 3px
+  width: 5px
+  height: 10px
+  border: solid white
+  border-width: 0 3px 3px 0
+  transform: rotate(45deg)
+
+
+.title
+  color: $dark-blue
+  font-size: 18px
