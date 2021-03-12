@@ -1,0 +1,12 @@
+@import "src/styles"
+
+.card
+  display: block
+  transform: scale(1)
+  transition: 0.3s ease-out
+
+@media (hover: hover) and (pointer: fine)
+  .card:hover
+    cursor: pointer
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2)
+    transform: scale(1.005)

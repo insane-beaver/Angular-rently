@@ -1,9 +1,13 @@
 export class House {
-  id!: number;
+  id!: string;
   ownerId!: string;
-  category!: number; //1-flat 2-house
+  category: number=0; //1-flat 2-house
   price!: number;
-  address!: string;
+  country!: string;
+  city!: string;
+  postalCode!: string;
   roomsNumber!: number;
   bathroomsNumber!: number;
+  photos: String[] = new Array<String>();
+  description: string = "";
 }

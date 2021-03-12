@@ -1,4 +1,6 @@
 import {Component, Input, OnInit, Output} from '@angular/core';
+import {Inf} from '../../classes/Inf';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-house-card',
@@ -7,12 +9,25 @@ import {Component, Input, OnInit, Output} from '@angular/core';
 })
 export class HouseCardComponent implements OnInit {
 
-  @Input('image')image!: string;
+  @Input('id')id!: string;
+  @Input('image')image!: String;
+  @Input('category')category!: string;
+  @Input('country')country!: string;
+  @Input('city')city!: string;
+  @Input('roomsNumber')roomsNumber!: number;
+  @Input('bathroomsNumber')bathroomsNumber!:number;
+  @Input('price')price!: number;
+  @Input('description')description!: string;
 
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
+
+  isDesktop() {
+    return Inf.isDesktop;
+  }
+
 
 }

@@ -2,27 +2,39 @@
 <div id="main" class="layout-box">
   <div class="top-bar">
     <nav class="d-flex navbar navbar-dark header">
-      <div class="justify-content-start">
+      <div class="d-flex justify-content-start">
         <button class="navbar-toggler collapsed" type="button"  aria-expanded="false" aria-label="Toggle navigation" (click)="openOverlay()">
           <span class="navbar-toggler-icon"></span>
         </button>
 
         <a class="ml-3 navbar-brand" routerLink="/" (click)="closeOverlay()">
-          <img src="assets/logo-light.png" style="height: 42px">
+          <img src="{{imagePath}}" style="height: 42px">
         </a>
       </div>
 
-      <div>
-        <button type="button" class="btn btn-link" data-toggle="modal" data-target="#SignUpModal">Sign up</button>
-        <button type="button" class="btn btn-link" data-toggle="modal" data-target="#LogInModal">Log in</button>
+      <div class="d-flex justify-content-end row">
+        <div [hidden]="!getIsLogedInf()">
+          <div class="btn-group dropleft">
+            <a class="btn btn-link dropdown-toggle" style="max-height: 42px; font-size: large; color: white;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Profile
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="font-size: medium;">
+              <a class="dropdown-item profile-a" data-toggle="modal" data-target="#Profile">{{getPersonInf().name}}</a>
+              <a class="dropdown-item profile-a"(click)="LogOut()" style="color: darkred;"><u>Log out</u></a>
+            </div>
+          </div>
+        </div>
+        <button [hidden]="getIsLogedInf()" style="font-size: large" type="button" class="btn btn-link" data-toggle="modal" data-target="#SignUpModal">Sign up</button>
+        <button [hidden]="getIsLogedInf()" style="font-size: large" type="button" class="btn btn-link" data-toggle="modal" data-target="#LogInModal">Log in</button>
       </div>
 
     </nav>
 
-    <div id="mySidebar" class="sidebar">
-      <a href="#">Services</a>
-      <a href="#">Clients</a>
-      <a href="#">Contact</a>
+    <div id="mySidebar" class="sidebar" (click)="closeOverlay()">
+      <a [hidden]="!getPersonInf().isOwner" routerLink="create-house">Create house</a>
+      <a [hidden]="!getPersonInf().isOwner" routerLink="my-advertisements">My houses</a>
+      <a routerLink="/">Back to home</a>
+      <a routerLink="houses-for-rent">Houses list</a>
     </div>
   </div>
 
@@ -53,6 +65,14 @@
               <p [hidden]="!(email_input1.touched && email_input1.invalid)" class="invalid">*Must be filled as email (for example: your_email@email.com)</p>
               <div class="form-group form-primary"> <input #password_input1="ngModel" type="password" class="form-control" name="password" [ngModel]="password" required minlength="6" placeholder="Password" value=""> </div>
               <p [hidden]="!(password_input1.touched && password_input1.invalid)" class="invalid">*Must contain at least 6 characters</p>
+              <div class="form-group form-primary">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" style="height: 2vh; width: 2vh;" value="false" id="isOwner" name="isOwner" [ngModel]="isOwner">
+                  <label class="form-check-label" for="isOwner" style="font-size: medium">
+                    I`m house/flat owner
+                  </label>
+                </div>
+              </div>
               <div class="row">
                 <div class="col-md-12" data-dismiss="modal">
                   <input type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20" (click)="signUp(signUpForm)" [disabled]="!signUpForm.valid" name="submit" value="Sign up Now">
@@ -64,7 +84,7 @@
                 <div class="line-separator"></div>
               </div>
               <div class="row">
-                <div class="col-md-12"> <a class="btn btn-lg btn-google btn-block text-uppercase btn-outline" (click)="authService.GoogleAuth()" data-dismiss="modal"><img src="https://img.icons8.com/color/16/000000/google-logo.png"> Sign up with Google</a> </div>
+                <div class="col-md-12"> <a class="btn btn-lg btn-google btn-block text-uppercase btn-outline" (click)="authService.GoogleSignUp()" data-dismiss="modal"><img src="https://img.icons8.com/color/16/000000/google-logo.png"> Sign up with Google</a> </div>
               </div> <br>
               <p class="text-inverse text-center">Already have an account? <a href="<?= base_url() ?>auth/login" data-abc="true" data-dismiss="modal" data-toggle="modal" data-target="#LogInModal">Log in</a></p>
             </div>
@@ -104,9 +124,52 @@
                 <div class="line-separator"></div>
               </div>
               <div class="row">
-                <div class="col-md-12"> <a class="btn btn-lg btn-google btn-block text-uppercase btn-outline" (click)="authService.GoogleAuth()" data-dismiss="modal"><img src="https://img.icons8.com/color/16/000000/google-logo.png"> Log in with Google</a> </div>
+                <div class="col-md-12"> <a class="btn btn-lg btn-google btn-block text-uppercase btn-outline" (click)="authService.GoogleLogIn()" data-dismiss="modal"><img src="https://img.icons8.com/color/16/000000/google-logo.png"> Log in with Google</a> </div>
               </div> <br>
               <p class="text-inverse text-center">Don`t have account yet? <a href="<?= base_url() ?>auth/login" data-abc="true" data-dismiss="modal" data-toggle="modal" data-target="#SignUpModal">Sign up</a></p>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="Profile" tabindex="-1" role="dialog" aria-labelledby="ProfileTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ProfileTitle">My Profile</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="md-float-material form-material" #profileForm="ngForm" (ngSubmit)="updateProfile(profileForm)">
+          <div class="auth-box card">
+            <div class="card-block">
+              <div class="form-group form-primary"> <input #name2="ngModel" type="text" class="form-control" name="name" [ngModel]="name" required value="" placeholder="Display name"> </div>
+              <p [hidden]="!(name2.touched && name2.invalid)" class="invalid">*Must be filled</p>
+
+              <div class="form-group form-primary"> <input #email_input2="ngModel" type="email" class="form-control" name="email" [ngModel]="email" required email value="" placeholder="Email"> </div>
+              <p [hidden]="!(email_input2.touched && email_input2.invalid)" class="invalid">*Must be filled as email (for example: your_email@email.com)</p>
+
+              <div class="form-group form-primary"> <input #mobile_input="ngModel" type="tel" class="form-control" name="mobile" [ngModel]="mobile" mask="000-000-000" required pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" value="" placeholder="Phone number"> </div>
+              <p [hidden]="!(mobile_input.touched && mobile_input.invalid)" class="invalid">*Must be filled as phone number (for example: 123-456-7890)</p>
+
+              <div class="form-group form-primary">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" style="height: 2vh; width: 2vh;" value="false" id="isOwner2" name="isOwner" [ngModel]="isOwner">
+                  <label class="form-check-label" for="isOwner" style="font-size: medium">
+                    I`m house/flat owner
+                  </label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12" data-dismiss="modal">
+                  <input type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20" (click)="updateProfile(profileForm)" [disabled]="!profileForm.valid" name="submit" value="Update profile">
+                </div>
+              </div>
             </div>
           </div>
         </form>

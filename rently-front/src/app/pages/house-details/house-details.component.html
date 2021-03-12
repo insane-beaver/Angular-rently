@@ -1,0 +1,65 @@
+<div class="main-content">
+  <div class="d-flex justify-content-center pt-2">
+    <h4>{{getHouseCategory()}}</h4>
+  </div>
+
+  <div class="container pt-2">
+    <div class="row">
+      <div class="col-lg-11" style="{{getMargin()}}">
+
+        <div class="slideshow-container">
+          <div class="mySlides" *ngFor="let slide of house.photos">
+            <div class="d-flex justify-content-center">
+              <img src="{{slide}}" style="{{getPreparedSize()}}">
+            </div>
+          </div>
+
+          <a class="prev" (click)="plusSlides(-1)">&#10094;</a>
+          <a class="next" (click)="plusSlides(1)">&#10095;</a>
+        </div>
+
+      </div>
+      <div class="col-md-auto">
+
+        <div class="d-flex align-items-center">
+          <table class="table borderless" style="max-width: 40vh; font-size: large;">
+            <tbody>
+            <tr>
+              <td><b>Category:</b></td>
+              <td>{{getCt()}}</td>
+            </tr>
+            <tr>
+              <td><b>Country:</b></td>
+              <td>{{house.country}}</td>
+            </tr>
+            <tr>
+              <td><b>City:</b></td>
+              <td>{{house.city}}</td>
+            </tr>
+            <tr>
+              <td><b>Rooms:</b></td>
+              <td>{{house.roomsNumber}}</td>
+            </tr>
+            <tr>
+              <td><b>Bathrooms:</b></td>
+              <td>{{house.bathroomsNumber}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <h5>By {{owner.name}}</h5>
+        <h6>Mobile:
+          <a href="tel:{{owner.mobileNumber}}">{{owner.mobileNumber}}</a>
+        </h6>
+
+      </div>
+    </div>
+  </div>
+
+
+  <div class="page-data">
+    <p style="font-size: medium">{{house.description}}</p>
+  </div>
+
+</div>
+

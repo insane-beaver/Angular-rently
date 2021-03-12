@@ -2,9 +2,24 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap')
 
 .main-content
+  margin-top: 1vh
   min-height: 92vh
-  background: $white //rgba($white, 0.2)
+  background: $white
 
+.bar
+  position: absolute
+  left: 1vh
+  top: 10vh
+  z-index: 1
+  width: 40vh
+
+.search-button
+  background-color: rgba(white, 0.8) !important
+  color: $dark-blue
+  border-radius: 0px 5px 5px 0px
+  &:hover
+    background-color: rgba($orange, 1) !important
+    color: $white
 
 body
   background-color: #eeeeee

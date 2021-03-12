@@ -8,11 +8,17 @@ import { MainPageComponent } from './pages/main-page/main-page.component';
 import { MainLayoutComponent } from './pages/main-layout/main-layout.component';
 import { HousesForRentComponent } from './pages/houses-for-rent/houses-for-rent.component';
 import { HouseCardComponent } from './components/house-card/house-card.component';
+import { LocalStorageService } from './services/local-storage.service';
+
 /*FIREBASE*/
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireModule } from '@angular/fire';
-import {FormsModule} from '@angular/forms';
-
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { CreateHouseComponent } from './pages/create-house/create-house.component';
+import { OwnerHousesListComponent } from './pages/owner-houses-list/owner-houses-list.component';
+import { HouseDetailsComponent } from './pages/house-details/house-details.component';
 
 @NgModule({
   declarations: [
@@ -20,16 +26,22 @@ import {FormsModule} from '@angular/forms';
     MainPageComponent,
     MainLayoutComponent,
     HousesForRentComponent,
-    HouseCardComponent
+    HouseCardComponent,
+    CreateHouseComponent,
+    OwnerHousesListComponent,
+    HouseDetailsComponent
   ],
     imports: [
-        BrowserModule,
-        AppRoutingModule,
-        AngularFireModule.initializeApp(environment.firebase),
-        AngularFireAuthModule,
-        FormsModule
+      BrowserModule,
+      AppRoutingModule,
+      AngularFireModule.initializeApp(environment.firebase),
+      AngularFireAuthModule,
+      AngularFirestoreModule,
+      AngularFireStorageModule,
+      FormsModule,
+      ReactiveFormsModule
     ],
-  providers: [],
+  providers: [LocalStorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

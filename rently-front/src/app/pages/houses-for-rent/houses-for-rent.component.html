@@ -1,151 +1,170 @@
 <div class="main-content">
+  <div class="bar" [hidden]="!isDesktop()">
+    <form #SortForm="ngForm" (ngSubmit)="Sort(SortForm)">
+      <div style="padding-top: 1em; padding-left: 1vh;  max-width: 30vh;">
+        <div class="d-flex justify-content-center">
+          <select class="form-control" style="max-width: 80%" #sort_select="ngModel" name="sortType" [ngModel]="sortType">
+            <option value='0' selected disabled>Sort by price</option>
+            <option value='0'>None</option>
+            <option disabled>───────────</option>
+            <option value="1">From max to min</option>
+            <option value="2">From min to max</option>
+          </select>
+        </div>
+        <div class="d-flex justify-content-center">
+          <button type="submit" class="btn btn-medium search-button" style="margin-top: 0.5em; margin-left: 2em; max-width: 80%">Sort</button>
+        </div>
+      </div>
+    </form>
 
-  <div class="d-flex align-items-center" style="max-width: 95vh; padding-top: 1em">
-    <div class="col-md-4">
-      <div class="card">
-        <article class="filter-group">
-          <header class="card-header">
-            <a href="#" data-toggle="collapse" data-target="#collapse_aside1" data-abc="true" aria-expanded="false" class="collapsed">
-              <i class="icon-control fa fa-chevron-down"></i>
-              <h6 class="title">Categories </h6>
-            </a>
-          </header>
-          <div class="filter-content collapse" id="collapse_aside1" style="">
-            <div class="card-body">
-              <ul class="list-menu">
-                <li><a href="#" data-abc="true">Houses </a></li>
-                <li><a href="#" data-abc="true">Flats </a></li>
-              </ul>
-            </div>
-          </div>
-        </article>
-        <article class="filter-group">
-          <header class="card-header">
-            <a href="#" data-toggle="collapse" data-target="#collapse_aside2" data-abc="true" aria-expanded="false" class="collapsed">
-              <i class="icon-control fa fa-chevron-down"></i>
-              <h6 class="title">Price </h6>
-            </a>
-          </header>
-          <div class="filter-content collapse" id="collapse_aside2" style="">
-            <div class="card-body">
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label>Min</label>
-                  <div class="dollar"><input class="form-control" type="number"></div>
-                </div>
-                <div class="form-group text-right col-md-6">
-                  <label>Max</label>
-                  <div class="dollar"><input class="form-control" type="number"></div>
+    <form #FilterForm="ngForm" (ngSubmit)="Filter(FilterForm)" style="width: 38vh;">
+      <div class="d-flex align-items-center" style="max-width: 100vh; padding-top: 3em">
+        <div class="col-md-10">
+          <div class="card">
+            <article class="filter-group">
+              <header class="card-header">
+                <a href="#" data-toggle="collapse" data-target="#collapse_aside1" data-abc="true" aria-expanded="false" class="collapsed">
+                  <i class="icon-control fa fa-chevron-down"></i>
+                  <h6 class="title">Categories </h6>
+                </a>
+              </header>
+              <div class="filter-content collapse" id="collapse_aside1" style="">
+                <div class="card-body">
+                  <ul class="list-menu">
+                    <li><a style="cursor: pointer;" data-abc="true" (click)="OnlyHouses()">Houses </a></li>
+                    <li><a style="cursor: pointer;" data-abc="true" (click)="OnlyFlats()">Flats </a></li>
+                  </ul>
                 </div>
               </div>
-            </div>
+            </article>
+            <article class="filter-group">
+              <header class="card-header">
+                <a href="#" data-toggle="collapse" data-target="#collapse_aside2" data-abc="true" aria-expanded="false" class="collapsed">
+                  <i class="icon-control fa fa-chevron-down"></i>
+                  <h6 class="title">Price </h6>
+                </a>
+              </header>
+              <div class="filter-content collapse" id="collapse_aside2" style="">
+                <div class="card-body">
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label>Min</label>
+                      <div class="dollar"><input class="form-control" type="number" #min_select="ngModel" name="minPrice" [ngModel]="minPrice"></div>
+                    </div>
+                    <div class="form-group text-right col-md-6">
+                      <label>Max</label>
+                      <div class="dollar"><input class="form-control" type="number" #max_select="ngModel" name="maxPrice" [ngModel]="maxPrice"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+            <article class="filter-group">
+              <header class="card-header">
+                <a href="#" data-toggle="collapse" data-target="#collapse_aside3" data-abc="true" aria-expanded="false" class="collapsed">
+                  <i class="icon-control fa fa-chevron-down"></i>
+                  <h6 class="title">Rooms </h6>
+                </a>
+              </header>
+              <div class="filter-content collapse" id="collapse_aside3" style="">
+                <div class="card-body">
+                  <label class="checkbox-btn">
+                    <input type="checkbox" class="custom-checkbox" #rooms_1_select="ngModel" name="rooms_1" [ngModel]="rooms_1">
+                    <span class="btn btn-light"> 1 </span>
+                  </label>
+                  <label class="checkbox-btn">
+                    <input type="checkbox" #rooms_2_select="ngModel" name="rooms_2" [ngModel]="rooms_2">
+                    <span class="btn btn-light"> 2 </span>
+                  </label>
+                  <label class="checkbox-btn">
+                    <input type="checkbox" #rooms_3_select="ngModel" name="rooms_3" [ngModel]="rooms_3">
+                    <span class="btn btn-light"> 3 </span>
+                  </label>
+                  <label class="checkbox-btn">
+                    <input type="checkbox" #rooms_4_select="ngModel" name="rooms_4" [ngModel]="rooms_4">
+                    <span class="btn btn-light"> 4 </span>
+                  </label>
+                  <label class="checkbox-btn">
+                    <input type="checkbox" #rooms_5_select="ngModel" name="rooms_5" [ngModel]="rooms_5">
+                    <span class="btn btn-light"> 5+ </span>
+                  </label>
+                </div>
+              </div>
+            </article>
+            <article class="filter-group">
+              <header class="card-header">
+                <a href="#" data-toggle="collapse" data-target="#collapse_aside4" data-abc="true" aria-expanded="false" class="collapsed">
+                  <i class="icon-control fa fa-chevron-down"></i>
+                  <h6 class="title">Bathrooms </h6>
+                </a>
+              </header>
+              <div class="filter-content collapse" id="collapse_aside4" style="">
+                <div class="card-body">
+                  <label class="checkbox-btn">
+                    <input type="checkbox" class="custom-checkbox" #bathrooms_1_select="ngModel" name="bathrooms_1" [ngModel]="bathrooms_1">
+                    <span class="btn btn-light"> 1 </span>
+                  </label>
+                  <label class="checkbox-btn">
+                    <input type="checkbox" #bathrooms_2_select="ngModel" name="bathrooms_2" [ngModel]="bathrooms_2">
+                    <span class="btn btn-light"> 2 </span>
+                  </label>
+                  <label class="checkbox-btn">
+                    <input type="checkbox" #bathrooms_3_select="ngModel" name="bathrooms_3" [ngModel]="bathrooms_3">
+                    <span class="btn btn-light"> 3 </span>
+                  </label>
+                  <label class="checkbox-btn">
+                    <input type="checkbox" #bathrooms_4_select="ngModel" name="bathrooms_4" [ngModel]="bathrooms_4">
+                    <span class="btn btn-light"> 4 </span>
+                  </label>
+                  <label class="checkbox-btn">
+                    <input type="checkbox" #bathrooms_5_select="ngModel" name="bathrooms_5" [ngModel]="bathrooms_5">
+                    <span class="btn btn-light"> 5+ </span>
+                  </label>
+                </div>
+              </div>
+            </article>
+            <article class="filter-group">
+              <a class="highlight-button btn btn-medium button xs-margin-bottom-five" data-abc="true" (click)="Filter(FilterForm)">Apply Now</a>
+            </article>
+            <article class="filter-group" style="margin-top: 0.5em;">
+              <a class="highlight-button btn btn-medium button xs-margin-bottom-five" data-abc="true" (click)="Cancel()">Cancel</a>
+            </article>
           </div>
-        </article>
-        <article class="filter-group">
-          <header class="card-header">
-            <a href="#" data-toggle="collapse" data-target="#collapse_aside3" data-abc="true" aria-expanded="false" class="collapsed">
-              <i class="icon-control fa fa-chevron-down"></i>
-              <h6 class="title">Rooms </h6>
-            </a>
-          </header>
-          <div class="filter-content collapse" id="collapse_aside3" style="">
-            <div class="card-body">
-              <label class="checkbox-btn">
-                <input type="checkbox" class="custom-checkbox">
-                <span class="btn btn-light"> 1 </span>
-              </label>
-              <label class="checkbox-btn">
-                <input type="checkbox">
-                <span class="btn btn-light"> 2 </span>
-              </label>
-              <label class="checkbox-btn">
-                <input type="checkbox">
-                <span class="btn btn-light"> 3 </span>
-              </label>
-              <label class="checkbox-btn">
-                <input type="checkbox">
-                <span class="btn btn-light"> 4 </span>
-              </label>
-              <label class="checkbox-btn">
-                <input type="checkbox">
-                <span class="btn btn-light"> 5+ </span>
-              </label>
-            </div>
-          </div>
-        </article>
-        <article class="filter-group">
-          <header class="card-header">
-            <a href="#" data-toggle="collapse" data-target="#collapse_aside4" data-abc="true" aria-expanded="false" class="collapsed">
-              <i class="icon-control fa fa-chevron-down"></i>
-              <h6 class="title">Bathrooms </h6>
-            </a>
-          </header>
-          <div class="filter-content collapse" id="collapse_aside4" style="">
-            <div class="card-body">
-              <label class="checkbox-btn">
-                <input type="checkbox" class="custom-checkbox">
-                <span class="btn btn-light"> 1 </span>
-              </label>
-              <label class="checkbox-btn">
-                <input type="checkbox">
-                <span class="btn btn-light"> 2 </span>
-              </label>
-              <label class="checkbox-btn">
-                <input type="checkbox">
-                <span class="btn btn-light"> 3 </span>
-              </label>
-              <label class="checkbox-btn">
-                <input type="checkbox">
-                <span class="btn btn-light"> 4 </span>
-              </label>
-              <label class="checkbox-btn">
-                <input type="checkbox">
-                <span class="btn btn-light"> 5+ </span>
-              </label>
-            </div>
-          </div>
-        </article>
-        <article class="filter-group">
-          <header class="card-header">
-            <a href="#" data-toggle="collapse" data-target="#collapse_aside5" data-abc="true" aria-expanded="false" class="collapsed">
-              <i class="icon-control fa fa-chevron-down"></i>
-              <h6 class="title">Rating </h6>
-            </a>
-          </header>
-          <div class="filter-content collapse" id="collapse_aside5" style="">
-            <div class="card-body">
-              <label class="container">One
-                <input type="checkbox" checked="checked">
-                <span class="checkmark"></span>
-              </label>
-              <label class="container">Two
-                <input type="checkbox" checked="checked">
-                <span class="checkmark"></span>
-              </label>
-              <label class="container">Three
-                <input type="checkbox" checked="checked">
-                <span class="checkmark"></span>
-              </label>
-              <label class="container">Four
-                <input type="checkbox" checked="checked">
-                <span class="checkmark"></span>
-              </label>
-            </div>
-          </div>
-        </article>
-        <article class="filter-group">
-          <a href="#" class="highlight-button btn btn-medium button xs-margin-bottom-five" data-abc="true">Apply Now</a>
-        </article>
+        </div>
       </div>
-    </div>
+    </form>
   </div>
 
-  <div style="position: absolute; margin-left: 35vh; top: 10vh">
-    <app-house-card image="https://thiscatdoesnotexist.com/"></app-house-card>
-    <app-house-card image="https://loremflickr.com/300/179/cat"></app-house-card>
-    <app-house-card image="https://loremflickr.com/300/180/cat"></app-house-card>
-    <app-house-card image="https://loremflickr.com/300/181/cat"></app-house-card>
-    <app-house-card image="https://loremflickr.com/300/182/cat"></app-house-card>
+  <div style="position: relative; margin-top: -1vh;">
+    <div class="d-flex justify-content-center" style="margin-left: 1em; padding-top: 1em;">
+      <h6>{{text}}</h6>
+    </div>
+    <div *ngFor="let item of houses">
+      <div class="d-flex justify-content-center">
+        <app-house-card style="width: 60%; max-width: 60%;" [hidden]="!isDesktop()"
+          [id] = "item.id"
+          [category]="getCategory(item.category)"
+          [country]="item.country"
+          [city]="item.city"
+          [roomsNumber]="item.roomsNumber"
+          [bathroomsNumber]="item.bathroomsNumber"
+          [price]="item.price"
+          [image]="item.photos[0]"
+          [description]="item.description">
+        </app-house-card>
+        <app-house-card style="width: 100%; max-width: 100%;" [hidden]="isDesktop()"
+          [id] = "item.id"
+          [category]="getCategory(item.category)"
+          [country]="item.country"
+          [city]="item.city"
+          [roomsNumber]="item.roomsNumber"
+          [bathroomsNumber]="item.bathroomsNumber"
+          [price]="item.price"
+          [image]="item.photos[0]"
+          [description]="item.description">
+        </app-house-card>
+      </div>
+    </div>
   </div>
 
 </div>

@@ -1,20 +1,48 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-12 mt-3">
-      <div class="card">
+      <a [routerLink]="['/house-details',id]" style="text-decoration: none; color: black;">
+      <div class="card" [hidden]="!isDesktop()">
         <div class="card-horizontal" style="display: flex; flex: 1 1 auto;">
           <div class="img-square-wrapper">
             <img class="" src="{{image}}" height="180px" alt="Card image cap">
           </div>
           <div class="card-body">
-            <h4 class="card-title">Card title</h4>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <h4 class="card-title">{{category}}</h4>
+
+            <div class="container" style="margin-left: -1em;">
+              <div class="row">
+                <div class="col-sm">
+                  <p class="card-text">{{city}},  {{country}}</p>
+                </div>
+                <div class="col-sm">
+                </div>
+                <div class="col-sm">
+                  <p class="card-text">Rooms: {{roomsNumber}},  Bathrooms: {{bathroomsNumber}}</p>
+                </div>
+              </div>
+            </div>
+
+            <p class="card-text" style="margin-top: 0.5em;">{{description}}</p>
           </div>
         </div>
         <div class="card-footer">
-          <small class="text-muted">Last updated 3 mins ago</small>
+          <small class="text-muted" style="font-size: medium">${{price}}</small>
         </div>
       </div>
+      </a>
+
+      <a [routerLink]="['/house-details',id]" style="text-decoration: none; color: black;">
+        <div class="card" style="width: 18rem; margin-left: 1.5em;" [hidden]="isDesktop()">
+          <img src="{{image}}" class="card-img-top">
+          <div class="card-body">
+            <h5 class="card-title">{{category}} for ${{price}}</h5>
+            <p class="card-text">{{city}},  {{country}}</p>
+            <p class="card-text">Rooms: {{roomsNumber}},  Bathrooms: {{bathroomsNumber}}</p>
+            <p class="card-text">{{description}}</p>
+          </div>
+        </div>
+      </a>
     </div>
   </div>
 </div>
