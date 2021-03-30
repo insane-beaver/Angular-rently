@@ -4,7 +4,7 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {House} from '../../classes/house';
 import {NgForm} from '@angular/forms';
 import {DatabaseProviderService} from '../../services/database-provider.service';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 
 @Component({
   selector: 'app-create-house',

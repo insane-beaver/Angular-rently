@@ -10,6 +10,15 @@ import { HousesForRentComponent } from './pages/houses-for-rent/houses-for-rent.
 import { HouseCardComponent } from './components/house-card/house-card.component';
 import { LocalStorageService } from './services/local-storage.service';
 
+/*ADSENSE*/
+import { AdsenseModule } from 'ng2-adsense';
+
+/*GOOGLE PAY*/
+import { GooglePayButtonModule } from '@google-pay/button-angular';
+
+/*PAYPAL*/
+import { NgxPayPalModule } from 'ngx-paypal';
+
 /*FIREBASE*/
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireModule } from '@angular/fire';
@@ -34,12 +43,18 @@ import { HouseDetailsComponent } from './pages/house-details/house-details.compo
     imports: [
       BrowserModule,
       AppRoutingModule,
-      AngularFireModule.initializeApp(environment.firebase),
+      AngularFireModule.initializeApp(environment.config),
       AngularFireAuthModule,
       AngularFirestoreModule,
       AngularFireStorageModule,
       FormsModule,
-      ReactiveFormsModule
+      ReactiveFormsModule,
+      AdsenseModule.forRoot({
+        adClient: 'ca-pub-7793855420321475',
+        adSlot: undefined,
+      }),
+      GooglePayButtonModule,
+      NgxPayPalModule
     ],
   providers: [LocalStorageService],
   bootstrap: [AppComponent]

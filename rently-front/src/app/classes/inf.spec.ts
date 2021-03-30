@@ -1,4 +1,4 @@
-import { Inf } from './inf';
+import { Inf } from './Inf';
 
 describe('Inf', () => {
   it('should create an instance', () => {

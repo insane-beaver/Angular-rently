@@ -4,6 +4,7 @@ import {House} from '../../classes/house';
 import {DatabaseProviderService} from '../../services/database-provider.service';
 import {Person} from '../../classes/person';
 import {Inf} from '../../classes/Inf';
+import {ICreateOrderRequest, IPayPalConfig} from 'ngx-paypal';
 
 @Component({
   selector: 'app-house-details',
@@ -16,6 +17,8 @@ export class HouseDetailsComponent implements OnInit, AfterViewInit {
 
   house: House = new House();
   owner: Person = new Person();
+  months: number = 1;
+  total: number = this.house.price * this.months;
   slideIndex = 0;
 
   ngOnInit(): void {
@@ -25,11 +28,15 @@ export class HouseDetailsComponent implements OnInit, AfterViewInit {
         this.house = this.database.getHouse(params.id);
         this.database.getOwner(this.house.ownerId).then(value => {
           this.owner = value;
+
+          this.total = this.house.price * this.months;
         })
       } else {
         this.router.navigateByUrl('/');
       }
     });
+    this.initPayPalConfig();
+    this.initGooglePayConfig();
   }
 
   ngAfterViewInit() {
@@ -82,5 +89,112 @@ export class HouseDetailsComponent implements OnInit, AfterViewInit {
     else
       return "max-width: 99%; max-height: 30vh;"
   }
+
+  countTotal() {
+    this.total = this.house.price * this.months;
+  }
+
+  /*GOOGLE PAY*/
+  googlePayConfig!: google.payments.api.PaymentDataRequest;
+  private initGooglePayConfig(): void {
+    this.googlePayConfig = {
+      apiVersion: 2,
+      apiVersionMinor: 0,
+      allowedPaymentMethods: [{
+        type: 'CARD',
+        parameters: {
+          allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+          allowedCardNetworks: ['VISA', 'MASTERCARD']
+        },
+        tokenizationSpecification: {
+          type: 'PAYMENT_GATEWAY',
+          parameters: {
+            gateway: 'allpayments',
+            gatewayMerchantId: 'exampleGatewayMerchantId'
+          }
+        }
+      }],
+      merchantInfo: {
+        merchantId: 'BCR2DN6TV7BM3M3V',
+        merchantName: 'Rently'
+      },
+      transactionInfo: {
+        totalPriceStatus: 'FINAL',
+        totalPriceLabel: 'Total',
+        totalPrice: (this.months * this.house.price).toString(),
+        currencyCode: 'USD',
+        countryCode: 'US'
+      }
+    }
+  }
+  onLoadPaymentData(event: any) {
+    console.log("load payment data", event.detail);
+  }
+  /*---END---*/
+
+  /*PayPal*/
+  payPalConfig ? : IPayPalConfig;
+  showSuccess: boolean = false;
+  private initPayPalConfig(): void {
+    this.payPalConfig = {
+      currency: 'USD',
+      clientId: 'sb',
+      createOrderOnClient: (data) => <ICreateOrderRequest>{
+        intent: 'CAPTURE',
+        purchase_units: [
+          {
+            amount: {
+              currency_code: 'USD',
+              value: this.total.toString(),
+              breakdown: {
+                item_total: {
+                  currency_code: 'USD',
+                  value: this.total.toString()
+                }
+              }
+            },
+            items: [
+              {
+                name: 'Months of rent',
+                quantity: this.months.toString(),
+                category: 'DIGITAL_GOODS',
+                unit_amount: {
+                  currency_code: 'USD',
+                  value: this.house.price.toString(),
+                },
+              }
+            ]
+          }
+        ]
+      },
+      advanced: {
+        commit: 'true'
+      },
+      style: {
+        label: 'paypal',
+        layout: 'vertical'
+      },
+      onApprove: (data, actions) => {
+        console.log('onApprove - transaction was approved, but not authorized', data, actions);
+        actions.order.get().then((details: any) => {
+          console.log('onApprove - you can get full order details inside onApprove: ', details);
+        });
+      },
+      onClientAuthorization: (data) => {
+        console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
+        this.showSuccess = true;
+      },
+      onCancel: (data, actions) => {
+        console.log('OnCancel', data, actions);
+      },
+      onError: err => {
+        console.log('OnError', err);
+      },
+      onClick: (data, actions) => {
+        console.log('onClick', data, actions);
+      },
+    };
+  }
+  /*---END---*/
 
 }
