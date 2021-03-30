@@ -1,0 +1,126 @@
+<div class="main-content">
+  <div class="d-flex justify-content-center pt-2">
+    <h4>{{getHouseCategory()}}</h4>
+  </div>
+
+  <div class="container pt-2">
+    <div class="row">
+      <div class="col-lg-11" style="{{getMargin()}}">
+
+        <div class="slideshow-container">
+          <div class="mySlides" *ngFor="let slide of house.photos">
+            <div class="d-flex justify-content-center">
+              <img src="{{slide}}" style="{{getPreparedSize()}}">
+            </div>
+          </div>
+
+          <a class="prev" (click)="plusSlides(-1)">&#10094;</a>
+          <a class="next" (click)="plusSlides(1)">&#10095;</a>
+        </div>
+
+      </div>
+      <div class="col-md-auto">
+
+        <div class="d-flex align-items-center">
+          <table class="table borderless" style="max-width: 40vh; font-size: large;">
+            <tbody>
+            <tr>
+              <td><b>Category:</b></td>
+              <td>{{getCt()}}</td>
+            </tr>
+            <tr>
+              <td><b>Country:</b></td>
+              <td>{{house.country}}</td>
+            </tr>
+            <tr>
+              <td><b>City:</b></td>
+              <td>{{house.city}}</td>
+            </tr>
+            <tr>
+              <td><b>Rooms:</b></td>
+              <td>{{house.roomsNumber}}</td>
+            </tr>
+            <tr>
+              <td><b>Bathrooms:</b></td>
+              <td>{{house.bathroomsNumber}}</td>
+            </tr>
+            <tr>
+              <td><b>Price:</b></td>
+              <td>${{house.price}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <h5>Owner: {{owner.name}}</h5>
+        <h6>Mobile:
+          <a href="tel:{{owner.mobileNumber}}" style="color: black">{{owner.mobileNumber}}</a>
+        </h6>
+
+        <div class="d-flex align-items-center">
+          <table class="table borderless" style="max-width: 40vh; margin-top: 2vh; font-size: large;">
+            <tbody>
+            <tr>
+              <td><b>Months:</b></td>
+              <td style="margin-top: -10px;">
+                <select class="custom-select mr-sm-1" id="months_select" [(ngModel)]="months" (ngModelChange)="countTotal()" >
+                  <option selected value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                  <option value="4">Four</option>
+                  <option value="5">Five</option>
+                  <option value="6">Six</option>
+                  <option value="8">Eight</option>
+                  <option value="12">Twelve</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td><b>Total:</b></td>
+              <td>
+                <p>${{total}}</p>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="d-flex justify-content-center" style="margin-top: -3vh;">
+          <button style="font-size: large; min-width: 20vh;" type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#RentModal">Rent</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="page-data">
+    <p style="font-size: medium">{{house.description}}</p>
+  </div>
+
+</div>
+
+
+<div class="modal fade" id="RentModal" tabindex="-1" role="dialog" aria-labelledby="RentTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="RentTitle">Place Order</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex justify-content-center" style="margin-bottom: 2vh;"> <h5>${{total}} to pay. Pay with:</h5> </div>
+        <div class="d-flex justify-content-center" style="margin-bottom: 2vh;">
+          <google-pay-button style="width: 30vh;"
+            environment="TEST" buttonType="buy" buttonColor="white"
+            [paymentRequest]="googlePayConfig"
+            (loadpaymentdata)="onLoadPaymentData($event)">
+          </google-pay-button>
+        </div>
+        <div class="d-flex justify-content-center" style="margin-bottom: 1vh;">
+          <ngx-paypal style="width: 30vh;" [config]="payPalConfig"></ngx-paypal>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

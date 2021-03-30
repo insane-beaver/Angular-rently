@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "rently-3f001": {
+      "hosting": {
+        "rently-front": [
+          "rently-3f001"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "rently-3f001"
+  }
+}

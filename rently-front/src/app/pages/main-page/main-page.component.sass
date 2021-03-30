@@ -1,0 +1,26 @@
+@import "src/styles"
+
+$margin-data: 0.6vh
+
+.group-back
+  background-color: rgba($dark-blue, 0.9)
+  height: 7vh
+  width: 70vh
+  border-radius: 5px
+
+.search-input
+  margin-left: $margin-data
+  background-color: lighten($dark-blue, 3%)
+  border-color: $dark-blue
+  color: darken(white, 5%)
+  &::placeholder
+    color: darken(white, 20%)
+
+.search-button
+  margin-right: $margin-data
+  background-color: rgba($orange, 0.8) !important
+  color: lighten($dark-blue, 75%)
+  border-radius: 0px 5px 5px 0px
+  &:hover
+    background-color: rgba($orange, 1) !important
+    color: darken($dark-blue, 50%)

@@ -1,0 +1,43 @@
+@import "src/styles"
+
+.main-content
+  min-height: 92vh
+  background: rgba($white, 0.8)
+
+.main-form
+  color: $dark-blue
+
+.image-grid img
+  margin-bottom: 1rem
+
+.box
+  display: flex
+  flex-wrap: wrap
+
+  .box>*
+    flex: 1 1 160px
+
+/*VALIDATION INFO*/
+.invalid
+  color: red
+  font-size: small
+
+.alert
+  padding: 20px
+  background-color: #f44336
+  color: white
+  position: absolute
+  display: none
+
+.closebtn
+  margin-left: 15px
+  color: white
+  font-weight: bold
+  float: right
+  font-size: 22px
+  line-height: 20px
+  cursor: pointer
+  transition: 0.3s
+
+.closebtn:hover
+  color: black

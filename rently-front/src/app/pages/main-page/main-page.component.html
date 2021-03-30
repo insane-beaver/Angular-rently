@@ -1,0 +1,31 @@
+<div class="d-flex align-items-center justify-content-center" style="min-height: 80vh;">
+
+  <form #mySearchForm="ngForm" (ngSubmit)="searchHouse(mySearchForm)" [hidden]="!isDesktop()">
+    <div class="d-flex align-items-center justify-content-center group-back input-group mb-3">
+      <div class="input-group input-group-lg">
+        <select class="form-control search-input" #city="ngModel" name="city" [ngModel]="selectedCity">
+          <option value='0' selected disabled>Select city here</option>
+          <option value='0'>None</option>
+          <option disabled>──────────────────────────────</option>
+          <option [value]="city" *ngFor="let city of cities">{{city}}</option>
+        </select>
+        <button type="button" class="btn btn-lg search-button" (click)="searchHouse(mySearchForm)">Search</button>
+      </div>
+    </div>
+  </form>
+
+  <form #mySearchForm1="ngForm" (ngSubmit)="searchHouse(mySearchForm1)" [hidden]="isDesktop()">
+    <div class="d-row align-items-center group-back input-group mb-3" style="{{getWidth()}}">
+      <div class="input-group input-group-lg">
+        <select class="form-control search-input" #city1="ngModel" name="city1" [ngModel]="selectedCity1">
+          <option value='0' selected disabled>Select city here</option>
+          <option value='0'>None</option>
+          <option disabled>─────────────</option>
+          <option [value]="city" *ngFor="let city of cities">{{city}}</option>
+        </select>
+        <button type="button" class="btn btn-lg search-button" (click)="searchHouseMobile(mySearchForm1)">Search</button>
+      </div>
+    </div>
+  </form>
+</div>
+
