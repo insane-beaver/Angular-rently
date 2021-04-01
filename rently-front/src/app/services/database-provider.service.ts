@@ -5,6 +5,8 @@ import { Person } from '../classes/person';
 import { Inf } from '../classes/Inf';
 import { LocalStorageService } from './local-storage.service';
 import {House} from '../classes/house';
+import {Help} from '../classes/help';
+import {FaqAndHelpComponent} from '../pages/faq-and-help/faq-and-help.component';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +14,7 @@ import {House} from '../classes/house';
 export class DatabaseProviderService {
   person_collection: string = "persons";
   houses_collection: string = "houses";
+  help_collection: string = "help";
 
 
   //person
@@ -160,6 +163,14 @@ export class DatabaseProviderService {
         }
       });
     })
+  }
+
+  //help
+  public saveHelp(help: Help) {
+    this.store.collection(this.help_collection).doc(help.id + '').set(Object.assign({}, help)).then(r  =>{
+      //alert("Dear, " + help.personName + ", we got your message and will answer you soon");
+      FaqAndHelpComponent.showSuccess();
+    });
   }
 
 }

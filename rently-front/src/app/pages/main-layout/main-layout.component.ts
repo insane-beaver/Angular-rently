@@ -61,7 +61,11 @@ export class MainLayoutComponent implements OnInit {
 
   openOverlay(): void {
     let sidebar = document.getElementById('mySidebar') as HTMLElement;
+    let a_tage = document.getElementsByClassName('a_tag') as HTMLCollectionOf<HTMLElement>;
     if (this.isOpened) {
+      /*for(let i =0; i<a_tage.length; ++i) {
+        a_tage.item(i)!.style.visibility = "hidden";
+      }*/
       sidebar.style.width = '0px';
 
       this.isOpened = false;
@@ -71,6 +75,8 @@ export class MainLayoutComponent implements OnInit {
 
       this.isOpened = true;
     }
+
+
   }
 
   closeOverlay(): void {
