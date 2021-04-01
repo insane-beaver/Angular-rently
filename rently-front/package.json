@@ -26,6 +26,7 @@
     "firebase": "^7.0 || ^8.0",
     "jquery": "^3.5.1",
     "ng2-adsense": "^9.1.0",
+    "ngx-google-places-autocomplete": "^2.0.5",
     "ngx-paypal": "^7.0.0",
     "ngx-webstorage-service": "^4.1.0",
     "popper.js": "^1.16.1",

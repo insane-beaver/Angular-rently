@@ -10,6 +10,9 @@ import { HousesForRentComponent } from './pages/houses-for-rent/houses-for-rent.
 import { HouseCardComponent } from './components/house-card/house-card.component';
 import { LocalStorageService } from './services/local-storage.service';
 
+/*PLACES*/
+import { GooglePlaceModule } from "ngx-google-places-autocomplete";
+
 /*ADSENSE*/
 import { AdsenseModule } from 'ng2-adsense';
 
@@ -28,6 +31,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { CreateHouseComponent } from './pages/create-house/create-house.component';
 import { OwnerHousesListComponent } from './pages/owner-houses-list/owner-houses-list.component';
 import { HouseDetailsComponent } from './pages/house-details/house-details.component';
+import { FaqAndHelpComponent } from './pages/faq-and-help/faq-and-help.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +42,8 @@ import { HouseDetailsComponent } from './pages/house-details/house-details.compo
     HouseCardComponent,
     CreateHouseComponent,
     OwnerHousesListComponent,
-    HouseDetailsComponent
+    HouseDetailsComponent,
+    FaqAndHelpComponent
   ],
     imports: [
       BrowserModule,
@@ -51,10 +56,11 @@ import { HouseDetailsComponent } from './pages/house-details/house-details.compo
       ReactiveFormsModule,
       AdsenseModule.forRoot({
         adClient: 'ca-pub-7793855420321475',
-        adSlot: undefined,
+        adSlot: 1549590434
       }),
       GooglePayButtonModule,
-      NgxPayPalModule
+      NgxPayPalModule,
+      GooglePlaceModule
     ],
   providers: [LocalStorageService],
   bootstrap: [AppComponent]

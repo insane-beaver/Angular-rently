@@ -1,9 +1,9 @@
 <div class="main-content">
-  <div class="d-flex justify-content-center pt-2">
+  <div class="d-flex justify-content-center">
     <h4>{{getHouseCategory()}}</h4>
   </div>
 
-  <div class="container pt-2">
+  <div class="container">
     <div class="row">
       <div class="col-lg-11" style="{{getMargin()}}">
 
@@ -92,6 +92,7 @@
   </div>
 
   <div class="page-data">
+    <p style="font-size: large; margin-left: 60%"><b>Full address:</b> {{house.addressLine1}} {{house.addressLine2}}, {{house.city}}, {{house.country}}</p>
     <p style="font-size: medium">{{house.description}}</p>
   </div>
 

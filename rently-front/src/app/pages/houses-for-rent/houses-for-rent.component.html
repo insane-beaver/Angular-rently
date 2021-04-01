@@ -139,6 +139,7 @@
     <div class="d-flex justify-content-center" style="margin-left: 1em; padding-top: 1em;">
       <h6>{{text}}</h6>
     </div>
+
     <div *ngFor="let item of houses">
       <div class="d-flex justify-content-center">
         <app-house-card style="width: 60%; max-width: 60%;" [hidden]="!isDesktop()"
@@ -164,6 +165,13 @@
           [description]="item.description">
         </app-house-card>
       </div>
+    </div>
+    <div class="d-flex justify-content-center">
+      <ng-adsense [hidden]="true"
+        [display]="'inline-block'"
+        [width]="320"
+        [height]="40"
+      ></ng-adsense>
     </div>
   </div>
 
