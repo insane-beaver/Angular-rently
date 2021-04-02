@@ -1,6 +1,6 @@
 <div class="background-img">
 <div id="main" class="layout-box">
-  <div class="top-bar">
+  <div class="top-bar" id="header">
     <nav class="d-flex navbar navbar-dark header">
       <div class="d-flex justify-content-start">
         <button class="navbar-toggler collapsed" type="button"  aria-expanded="false" aria-label="Toggle navigation" (click)="openOverlay()">
@@ -42,7 +42,7 @@
     </div>
   </div>
 
-  <div class="page-content main">
+  <div class="page-content main" id="content">
     <router-outlet></router-outlet>
   </div>
 

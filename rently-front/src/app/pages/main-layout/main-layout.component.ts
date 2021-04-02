@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import { AuthServiceService } from '../../services/auth-service.service';
 import {NgForm} from '@angular/forms';
 import {Person} from '../../classes/person';
@@ -23,9 +23,27 @@ export class MainLayoutComponent implements OnInit {
   mobile!: string;
 
   ngOnInit(): void {
+    window.onscroll = function(){
+      let header = document.getElementById("header") as HTMLElement;
+      let sticky = header.offsetTop;
+
+      if (window.pageYOffset > sticky) {
+        header.classList.add("sticky");
+      } else {
+        header.classList.remove("sticky");
+      }
+    };
+
     this.storage.getInf();
-    this.checkDeviceType()
+    this.checkDeviceType();
     this.setProfileData();
+
+    window.addEventListener("orientationchange", function() {
+      if(!Inf.isDesktop) {
+        if(window.screen.orientation.angle == 90)
+          alert("Rotate your phone to portrait mode");
+      }
+    });
   }
 
   private setProfileData() {

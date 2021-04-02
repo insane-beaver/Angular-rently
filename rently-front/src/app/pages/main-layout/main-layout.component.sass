@@ -1,7 +1,5 @@
 @import "src/styles"
 
-$header-size: 9vh
-
 .sidebar
   height: 100%
   width: 0
@@ -50,7 +48,13 @@ $header-size: 9vh
 .header
   background-color: rgba($dark-blue, 0.7)
   height: $header-size
-
+.sticky
+  position: fixed
+  top: 0
+  width: 100%
+  z-index: 2
+  .header
+    background-color: rgba($dark-blue, 0.95)
 
 
 .login-block
