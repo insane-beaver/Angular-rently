@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-12 mt-3">
-      <a [routerLink]="['/house-details',id]" style="text-decoration: none; color: black;">
+      <a [routerLink]="['/house-details',id]" style="text-decoration: none; color: #000000;">
       <div class="card" [hidden]="!isDesktop()">
         <div class="card-horizontal" style="display: flex; flex: 1 1 auto;">
           <div class="img-square-wrapper">
@@ -33,7 +33,7 @@
       </a>
 
       <a [routerLink]="['/house-details',id]" style="text-decoration: none; color: black;">
-        <div class="card" style="width: 18rem; margin-left: 1.5em;" [hidden]="isDesktop()">
+        <div class="card" [hidden]="isDesktop()">
           <img src="{{image}}" class="card-img-top">
           <div class="card-body">
             <h5 class="card-title">{{category}} for ${{price}}</h5>

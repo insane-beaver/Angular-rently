@@ -5,6 +5,7 @@ import {DatabaseProviderService} from '../../services/database-provider.service'
 import {Person} from '../../classes/person';
 import {Inf} from '../../classes/Inf';
 import {ICreateOrderRequest, IPayPalConfig} from 'ngx-paypal';
+import {isEmpty} from 'rxjs/operators';
 
 @Component({
   selector: 'app-house-details',
@@ -16,6 +17,7 @@ export class HouseDetailsComponent implements OnInit, AfterViewInit {
   constructor(private router: Router, private route: ActivatedRoute, private database: DatabaseProviderService) { }
 
   house: House = new House();
+  slides: String[] = new Array<String>();
   owner: Person = new Person();
   months: number = 1;
   total: number = this.house.price * this.months;
@@ -37,6 +39,10 @@ export class HouseDetailsComponent implements OnInit, AfterViewInit {
     });
     this.initPayPalConfig();
     this.initGooglePayConfig();
+
+    for(let i=1; i<this.house.photos.length; ++i) {
+      this.slides.push(this.house.photos[i]);
+    }
   }
 
   ngAfterViewInit() {

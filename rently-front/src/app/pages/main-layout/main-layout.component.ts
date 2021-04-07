@@ -25,12 +25,15 @@ export class MainLayoutComponent implements OnInit {
   ngOnInit(): void {
     window.onscroll = function(){
       let header = document.getElementById("header") as HTMLElement;
+      let scrollToTopBtn = document.getElementById("scrollToTopBtn") as HTMLElement;
       let sticky = header.offsetTop;
 
       if (window.pageYOffset > sticky) {
         header.classList.add("sticky");
+        scrollToTopBtn.style.display = "block"
       } else {
         header.classList.remove("sticky");
+        scrollToTopBtn.style.display = "none"
       }
     };
 
@@ -40,10 +43,18 @@ export class MainLayoutComponent implements OnInit {
 
     window.addEventListener("orientationchange", function() {
       if(!Inf.isDesktop) {
-        if(window.screen.orientation.angle == 90)
+        if(window.screen.orientation.angle != 0)
           alert("Rotate your phone to portrait mode");
       }
     });
+  }
+
+  scrollToTop() {
+    let rootElement = document.documentElement
+    rootElement.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    })
   }
 
   private setProfileData() {
@@ -79,17 +90,16 @@ export class MainLayoutComponent implements OnInit {
 
   openOverlay(): void {
     let sidebar = document.getElementById('mySidebar') as HTMLElement;
-    let a_tage = document.getElementsByClassName('a_tag') as HTMLCollectionOf<HTMLElement>;
+    let sidebarContent = document.getElementById('sidebar-content') as HTMLElement;
     if (this.isOpened) {
-      /*for(let i =0; i<a_tage.length; ++i) {
-        a_tage.item(i)!.style.visibility = "hidden";
-      }*/
       sidebar.style.width = '0px';
+      sidebarContent.className = "sidebar-content-close"
 
       this.isOpened = false;
     }
     else {
       sidebar.style.width = '200px';
+      sidebarContent.className = "sidebar-content-open"
 
       this.isOpened = true;
     }

@@ -1,4 +1,4 @@
-<div class="background-img">
+<body class="background-img">
 <div id="main" class="layout-box">
   <div class="top-bar" id="header">
     <nav class="d-flex navbar navbar-dark header">
@@ -31,23 +31,26 @@
     </nav>
 
     <div id="mySidebar" class="sidebar" (click)="closeOverlay()">
-      <a class="a_tag" [hidden]="!getPersonInf().isOwner" routerLink="create-house">Create house</a>
-      <a class="a_tag" [hidden]="!getPersonInf().isOwner" routerLink="my-advertisements">My houses</a>
-      <a class="a_tag" routerLink="/">Back to home</a>
-      <a class="a_tag" routerLink="houses-for-rent">Houses list</a>
-      <br>
-      <div class="d-flex justify-content-center" style="margin-left: -1vw;"><a class="a_tag">--------------</a></div>
-      <br>
-      <a class="a_tag" routerLink="faq">FAQ</a>
+      <div id="sidebar-content" class="sidebar-content">
+        <a [hidden]="!getPersonInf().isOwner" routerLink="create-house">Create house</a>
+        <a [hidden]="!getPersonInf().isOwner" routerLink="my-advertisements">My houses</a>
+        <a routerLink="/">Back to home</a>
+        <a routerLink="houses-for-rent">Houses list</a>
+        <br>
+        <div class="d-flex justify-content-center" style="margin-left: -1vw;"><a>--------------</a></div>
+        <br>
+        <a routerLink="faq">FAQ</a>
+      </div>
     </div>
   </div>
 
   <div class="page-content main" id="content">
     <router-outlet></router-outlet>
+    <button id="scrollToTopBtn" (click)="scrollToTop()">☝️</button>
   </div>
 
 </div>
-</div>
+</body>
 
 <!-- Modal -->
 <div class="modal fade" id="SignUpModal" tabindex="-1" role="dialog" aria-labelledby="SignUpModalTitle" aria-hidden="true">
