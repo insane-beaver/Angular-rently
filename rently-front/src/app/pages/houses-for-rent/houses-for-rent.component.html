@@ -1,7 +1,7 @@
 <div class="main-content">
   <div class="bar" [hidden]="!isDesktop()">
     <form #SortForm="ngForm" (ngSubmit)="Sort(SortForm)">
-      <div style="padding-top: 1em; padding-left: 1vh;  max-width: 30vh;">
+      <div style="padding-top: 1em; padding-left: 1vh;">
         <div class="d-flex justify-content-center">
           <select class="form-control" style="max-width: 80%" #sort_select="ngModel" name="sortType" [ngModel]="sortType">
             <option value='0' selected disabled>Sort by price</option>
