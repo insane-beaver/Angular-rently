@@ -4,13 +4,15 @@ import {NgForm} from '@angular/forms';
 import {Person} from '../../classes/person';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { Inf } from '../../classes/Inf';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
 @Component({
   selector: 'app-main-layout',
   templateUrl: './main-layout.component.html',
   styleUrls: ['./main-layout.component.sass']
 })
-export class MainLayoutComponent implements OnInit {
+export class MainLayoutComponent implements OnInit, AfterViewInit {
   isOpened = false;
   imagePath!: string;
 
@@ -21,6 +23,9 @@ export class MainLayoutComponent implements OnInit {
   password!: string;
   isOwner: boolean = false;
   mobile!: string;
+  verCode!: number;
+  recaptchaVerifier!: firebase.auth.RecaptchaVerifier;
+  recaptchaSolved: boolean = false;
 
   ngOnInit(): void {
     window.onscroll = function(){
@@ -47,6 +52,15 @@ export class MainLayoutComponent implements OnInit {
           alert("Rotate your phone to portrait mode");
       }
     });
+  }
+  ngAfterViewInit(): void {
+    this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+      'callback': (response: any) => {
+        console.log("reCAPTCHA solved");
+        this.recaptchaSolved = true;
+      }
+    });
+    this.recaptchaVerifier.render();
   }
 
   scrollToTop() {
@@ -88,30 +102,38 @@ export class MainLayoutComponent implements OnInit {
     return Inf.isDesktop;
   }
 
-  openOverlay(): void {
+  toggleOverlay(options?: number): void {
+    let button = document.getElementById('menu') as HTMLElement;
     let sidebar = document.getElementById('mySidebar') as HTMLElement;
     let sidebarContent = document.getElementById('sidebar-content') as HTMLElement;
-    if (this.isOpened) {
-      sidebar.style.width = '0px';
-      sidebarContent.className = "sidebar-content-close"
+    if(options==1) {
+      if (this.isOpened) {
+        button.classList.toggle('opened');
+        button.setAttribute('aria-expanded', String(button.classList.contains('opened')));
 
-      this.isOpened = false;
+        sidebar.style.width = '0px';
+        sidebarContent.className = "sidebar-content-close"
+
+        this.isOpened = false;
+      }
     }
     else {
-      sidebar.style.width = '200px';
-      sidebarContent.className = "sidebar-content-open"
+      button.classList.toggle('opened');
+      button.setAttribute('aria-expanded', String(button.classList.contains('opened')));
 
-      this.isOpened = true;
+      if (this.isOpened) {
+        sidebar.style.width = '0px';
+        sidebarContent.className = "sidebar-content-close"
+
+        this.isOpened = false;
+      }
+      else {
+        sidebar.style.width = '200px';
+        sidebarContent.className = "sidebar-content-open"
+
+        this.isOpened = true;
+      }
     }
-
-
-  }
-
-  closeOverlay(): void {
-    let sidebar = document.getElementById('mySidebar') as HTMLElement;
-    sidebar.style.width = '0px';
-
-    this.isOpened = false;
   }
 
   signUp(form: NgForm):void {
@@ -150,7 +172,14 @@ export class MainLayoutComponent implements OnInit {
     person.mobileNumber = form.value.mobile;
     person.isOwner = form.value.isOwner;
 
-    this.authService.UpdateProfile(person);
+    if(this.recaptchaSolved) {
+      this.authService.UpdateProfile(person, this.recaptchaVerifier);
+    }
   }
+  public static showVerification() {
+    let div = document.getElementById('verification-code') as HTMLElement;
+    div.style.display = 'block';
+  }
+
 
 }

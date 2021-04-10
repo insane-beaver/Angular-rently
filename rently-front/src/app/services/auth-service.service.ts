@@ -7,14 +7,14 @@ import { LocalStorageService } from './local-storage.service';
 
 import firebase from 'firebase/app'
 import { AngularFireAuth } from '@angular/fire/auth';
-import storage = firebase.storage;
-import database = firebase.database;
+import {NgModel} from '@angular/forms';
+import {MainLayoutComponent} from '../pages/main-layout/main-layout.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthServiceService {
-  constructor(private afAuth: AngularFireAuth, private storage: LocalStorageService, private database: DatabaseProviderService, private router: Router) { }
+  constructor(private afAuth: AngularFireAuth, private storage: LocalStorageService, private database: DatabaseProviderService, private router: Router) {}
 
   GoogleLogIn() {
     return this.AuthLogin(new firebase.auth.GoogleAuthProvider());
@@ -90,21 +90,40 @@ export class AuthServiceService {
       });
   }
 
-  UpdateProfile(person: Person) {
-    Inf.person = person;
-    this.storage.saveInf();
-    this.database.savePerson();
-    var user = firebase.auth().currentUser;
-    user!.updateProfile({
-      displayName: person.name
-    }).then(function() {
-      user!.updateEmail(person.email).then(function() {
-        // Update successful.
-      }).catch(function(error) {
-        console.log(error)
+  user!:any; confirmationResult!:any; person!:any;
+  UpdateProfile(person: Person, recaptchaVerifier: firebase.auth.RecaptchaVerifier) {
+    this.user = firebase.auth().currentUser;
+    this.person = person
+    let phoneNumber = Inf.person.mobileNumber.replace('-','');
+    phoneNumber = "+38"+phoneNumber.replace('-','');
+    firebase.auth().signInWithPhoneNumber(phoneNumber, recaptchaVerifier)
+      .then((confirmationResult) => {
+        this.confirmationResult = confirmationResult;
+        MainLayoutComponent.showVerification();
+      }).catch((error) => {
+        console.log(error);
       });
-    }).catch(function(error) {
-      console.log(error)
+  }
+  UpdateProfile2(code: NgModel) {
+    let user = this.user;
+    let person = this.person;
+    this.confirmationResult.confirm(code.viewModel.toString()).then((result:any) => {
+      result.user?.delete();
+      this.storage.saveInf();
+      this.database.savePerson();
+      user!.updateProfile({
+        displayName: person.name
+      }).then(function() {
+        user!.updateEmail(person.email).then(function() {
+        }).catch(function(error:any) {
+          console.log(error);
+        });
+      }).catch(function(error:any) {
+        console.log(error);
+      });
+      setTimeout(() => this.SignOut(), 1000);
+    }).catch((error:any) => {
+      console.log(error);
     });
   }
 

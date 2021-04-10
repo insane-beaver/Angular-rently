@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnChanges, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {House} from '../../classes/house';
 import {DatabaseProviderService} from '../../services/database-provider.service';
@@ -12,41 +12,33 @@ import {isEmpty} from 'rxjs/operators';
   templateUrl: './house-details.component.html',
   styleUrls: ['./house-details.component.sass']
 })
-export class HouseDetailsComponent implements OnInit, AfterViewInit {
+export class HouseDetailsComponent implements OnInit {
 
   constructor(private router: Router, private route: ActivatedRoute, private database: DatabaseProviderService) { }
 
   house: House = new House();
-  slides: String[] = new Array<String>();
   owner: Person = new Person();
   months: number = 1;
-  total: number = this.house.price * this.months;
+  total!: number;
   slideIndex = 0;
 
-  ngOnInit(): void {
-    this.route.params.subscribe((params: Params) => {
-      this.house = new House();
-      if(params.id) {
-        this.house = this.database.getHouse(params.id);
-        this.database.getOwner(this.house.ownerId).then(value => {
-          this.owner = value;
+  ngOnInit() {
+    this.database.getHousesPromise().then(value => {
+      this.route.params.subscribe((params: Params) => {
+        this.house = new House();
+        if(params.id) {
+          this.house = this.database.getHouse(params.id);
+          setTimeout(() => this.plusSlides(1), 500);
 
+          this.database.getOwner(this.house.ownerId).then(value => {
+            this.owner = value;
+          });
           this.total = this.house.price * this.months;
-        })
-      } else {
-        this.router.navigateByUrl('/');
-      }
+          this.initPayPalConfig();
+          this.initGooglePayConfig();
+        }
+      });
     });
-    this.initPayPalConfig();
-    this.initGooglePayConfig();
-
-    for(let i=1; i<this.house.photos.length; ++i) {
-      this.slides.push(this.house.photos[i]);
-    }
-  }
-
-  ngAfterViewInit() {
-    this.plusSlides(1);
   }
 
   plusSlides(n:number) {
@@ -66,7 +58,7 @@ export class HouseDetailsComponent implements OnInit, AfterViewInit {
   }
 
   getHouseCategory() {
-    let string: string = "Error of loading page, please go back to the main page";
+    let string!: string;
 
     if(this.house.category == 1)
       string = "Flat"
@@ -127,7 +119,7 @@ export class HouseDetailsComponent implements OnInit, AfterViewInit {
       transactionInfo: {
         totalPriceStatus: 'FINAL',
         totalPriceLabel: 'Total',
-        totalPrice: (this.months * this.house.price).toString(),
+        totalPrice: this.total.toString(),
         currencyCode: 'USD',
         countryCode: 'US'
       }
