@@ -23,7 +23,7 @@
               Profile
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="font-size: medium;">
-              <a class="dropdown-item profile-a" data-toggle="modal" data-target="#Profile">{{getPersonInf().name}}</a>
+              <a class="dropdown-item profile-a" data-toggle="modal" data-target="#Profile" (click)="setProfileData()">{{getPersonInf().name}}</a>
               <a class="dropdown-item profile-a"(click)="LogOut()" style="color: darkred;"><u>Log out</u></a>
             </div>
           </div>
@@ -50,7 +50,11 @@
 
   <div class="page-content main" id="content">
     <router-outlet></router-outlet>
-    <button id="scrollToTopBtn" (click)="scrollToTop()">☝️</button>
+    <button id="scrollToTopBtn" (click)="scrollToTop()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 20">
+        <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+      </svg>
+    </button>
   </div>
 
 </div>

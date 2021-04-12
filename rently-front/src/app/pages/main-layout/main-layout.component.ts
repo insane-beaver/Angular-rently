@@ -71,7 +71,7 @@ export class MainLayoutComponent implements OnInit, AfterViewInit {
     })
   }
 
-  private setProfileData() {
+  setProfileData() {
     if(Inf.isLoged) {
       this.name = Inf.person.name;
       this.email = Inf.person.email;
