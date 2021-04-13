@@ -33,7 +33,7 @@
       </a>
 
       <a [routerLink]="['/house-details',id]" style="text-decoration: none; color: black;">
-        <div class="card" [hidden]="isDesktop()">
+        <div class="card" [hidden]="isDesktop()" style="max-width: 75vw; margin: auto;">
           <img src="{{image}}" class="card-img-top">
           <div class="card-body">
             <h5 class="card-title">{{category}} for ${{price}}</h5>
