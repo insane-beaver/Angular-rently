@@ -1,5 +1,5 @@
 # rently
-Angular SPA for house rent with java backend
+Angular SPA for house rent
 ___
 
 You can access already hosted project at: https://rently.studio/
