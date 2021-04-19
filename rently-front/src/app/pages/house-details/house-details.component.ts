@@ -5,7 +5,10 @@ import {DatabaseProviderService} from '../../services/database-provider.service'
 import {Person} from '../../classes/person';
 import {Inf} from '../../classes/Inf';
 import {ICreateOrderRequest, IPayPalConfig} from 'ngx-paypal';
-import {isEmpty} from 'rxjs/operators';
+import {Payment} from '../../classes/payment';
+import jspdf from 'jspdf';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-house-details',
@@ -17,9 +20,11 @@ export class HouseDetailsComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute, private database: DatabaseProviderService) { }
 
   house: House = new House();
+  payment: Payment = new Payment();
   owner: Person = new Person();
   months: number = 1;
-  total!: number;
+  totalNoTax!: number;
+  totalTax!: number;
   slideIndex = 0;
 
   ngOnInit() {
@@ -33,7 +38,8 @@ export class HouseDetailsComponent implements OnInit {
           this.database.getOwner(this.house.ownerId).then(value => {
             this.owner = value;
           });
-          this.total = this.house.price * this.months;
+          this.totalNoTax = this.house.price * this.months;
+          this.totalTax = this.totalNoTax + this.totalNoTax * 0.01;
           this.initPayPalConfig();
           this.initGooglePayConfig();
         }
@@ -89,7 +95,8 @@ export class HouseDetailsComponent implements OnInit {
   }
 
   countTotal() {
-    this.total = this.house.price * this.months;
+    this.totalNoTax = this.house.price * this.months;
+    this.totalTax = this.totalNoTax + this.totalNoTax * 0.01;
   }
 
   /*GOOGLE PAY*/
@@ -119,7 +126,7 @@ export class HouseDetailsComponent implements OnInit {
       transactionInfo: {
         totalPriceStatus: 'FINAL',
         totalPriceLabel: 'Total',
-        totalPrice: this.total.toString(),
+        totalPrice: this.totalTax.toString(),
         currencyCode: 'USD',
         countryCode: 'US'
       }
@@ -127,6 +134,7 @@ export class HouseDetailsComponent implements OnInit {
   }
   onLoadPaymentData(event: any) {
     console.log("load payment data", event.detail);
+    this.savePayment();
   }
   /*---END---*/
 
@@ -143,11 +151,11 @@ export class HouseDetailsComponent implements OnInit {
           {
             amount: {
               currency_code: 'USD',
-              value: this.total.toString(),
+              value: this.totalTax.toString(),
               breakdown: {
                 item_total: {
                   currency_code: 'USD',
-                  value: this.total.toString()
+                  value: this.totalTax.toString()
                 }
               }
             },
@@ -177,6 +185,7 @@ export class HouseDetailsComponent implements OnInit {
         actions.order.get().then((details: any) => {
           console.log('onApprove - you can get full order details inside onApprove: ', details);
         });
+        this.savePayment();
       },
       onClientAuthorization: (data) => {
         console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
@@ -194,5 +203,31 @@ export class HouseDetailsComponent implements OnInit {
     };
   }
   /*---END---*/
+
+  savePayment() {
+    this.payment.id = 'r'+Date.now().toString();
+
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0');
+    let yyyy = today.getFullYear();
+    this.payment.date = dd + '.' + mm + '.' + yyyy + ' ' + today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+
+    this.payment.house = this.house;
+    this.payment.months = this.months;
+    this.payment.renterId = Inf.person.id;
+
+    setTimeout(() => this.printReceipt(), 100);
+    this.database.savePayment(this.payment);
+  }
+  printReceipt() {
+    const data = document.getElementById('Receipt') as HTMLElement;
+    const doc: jsPDF = new jsPDF("p", "px", "b4");
+    doc.html(data, {
+      callback: (doc) => {
+        doc.save("rently.studio - " + this.payment.date + ".pdf");
+      }
+    });
+  }
 
 }

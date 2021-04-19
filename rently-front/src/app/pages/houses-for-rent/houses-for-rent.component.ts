@@ -178,6 +178,9 @@ export class HousesForRentComponent implements OnInit {
   isOpened: boolean = false;
   toggleSidebar() {
     let sidebar = document.getElementById('filterSidebar') as HTMLElement;
+    let burger = document.getElementById('burger') as HTMLElement;
+    burger.classList.toggle('open');
+
     if (this.isOpened) {
       sidebar.style.width = '0px';
 

@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import { AuthServiceService } from '../../services/auth-service.service';
-import {NgForm} from '@angular/forms';
+import {NgForm, NgModel} from '@angular/forms';
 import {Person} from '../../classes/person';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { Inf } from '../../classes/Inf';
@@ -134,6 +134,18 @@ export class MainLayoutComponent implements OnInit, AfterViewInit {
         this.isOpened = true;
       }
     }
+  }
+
+  validateMobile(mobileInput: NgModel) {
+    let arr: string[] = mobileInput.viewModel.split('');
+    arr.forEach(element => {
+      if(element == '-') arr.splice(arr.indexOf(element),1);
+    });
+    if(arr.length>=3)
+      arr.splice(3, 0, '-');
+    if(arr.length>=7)
+      arr.splice(7, 0, '-');
+    this.mobile = arr.join('');
   }
 
   signUp(form: NgForm):void {
