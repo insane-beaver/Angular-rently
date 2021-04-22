@@ -22,6 +22,7 @@ export class MainLayoutComponent implements OnInit, AfterViewInit {
   email!: string;
   password!: string;
   isOwner: boolean = false;
+  agrrEula: boolean = false;
   mobile!: string;
   verCode!: number;
   recaptchaVerifier!: firebase.auth.RecaptchaVerifier;
@@ -136,6 +137,13 @@ export class MainLayoutComponent implements OnInit, AfterViewInit {
     }
   }
 
+  eulaCheck() {
+    if(!this.agrrEula)
+      this.agrrEula = true;
+    else
+      this.agrrEula = false;
+  }
+
   validateMobile(mobileInput: NgModel) {
     let arr: string[] = mobileInput.viewModel.split('');
     arr.forEach(element => {
@@ -153,7 +161,7 @@ export class MainLayoutComponent implements OnInit, AfterViewInit {
     person.name = form.value.name;
     person.email = form.value.email;
     person.password = form.value.password;
-    person.isOwner = form.value.isOwner;
+    person.isOwner = false;
     form.reset();
     this.authService.SignUp(person);
 

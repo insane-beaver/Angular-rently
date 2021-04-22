@@ -32,6 +32,7 @@ import { CreateHouseComponent } from './pages/create-house/create-house.componen
 import { OwnerHousesListComponent } from './pages/owner-houses-list/owner-houses-list.component';
 import { HouseDetailsComponent } from './pages/house-details/house-details.component';
 import { FaqAndHelpComponent } from './pages/faq-and-help/faq-and-help.component';
+import { EulaComponent } from './components/eula/eula.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { FaqAndHelpComponent } from './pages/faq-and-help/faq-and-help.component
     CreateHouseComponent,
     OwnerHousesListComponent,
     HouseDetailsComponent,
-    FaqAndHelpComponent
+    FaqAndHelpComponent,
+    EulaComponent
   ],
     imports: [
       BrowserModule,
