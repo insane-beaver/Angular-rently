@@ -1,12 +1,11 @@
 <div class="main-content">
-  <div class="d-flex justify-content-center pt-2">
+  <div class="d-flex justify-content-center">
     <h4>{{getHouseCategory()}}</h4>
   </div>
 
-  <div class="container pt-2">
+  <div class="container">
     <div class="row">
       <div class="col-lg-11" style="{{getMargin()}}">
-
         <div class="slideshow-container">
           <div class="mySlides" *ngFor="let slide of house.photos">
             <div class="d-flex justify-content-center">
@@ -17,7 +16,6 @@
           <a class="prev" (click)="plusSlides(-1)">&#10094;</a>
           <a class="next" (click)="plusSlides(1)">&#10095;</a>
         </div>
-
       </div>
       <div class="col-md-auto">
 
@@ -62,7 +60,8 @@
             <tr>
               <td><b>Months:</b></td>
               <td style="margin-top: -10px;">
-                <select class="custom-select mr-sm-1" id="months_select" [(ngModel)]="months" (ngModelChange)="countTotal()" >
+                <select class="custom-select mr-sm-1" id="months_select" [(ngModel)]="months"
+                        (ngModelChange)="countTotal()">
                   <option selected value="1">One</option>
                   <option value="2">Two</option>
                   <option value="3">Three</option>
@@ -77,14 +76,16 @@
             <tr>
               <td><b>Total:</b></td>
               <td>
-                <p>${{total}}</p>
+                <p>${{totalTax}}</p>
               </td>
             </tr>
             </tbody>
           </table>
         </div>
         <div class="d-flex justify-content-center" style="margin-top: -3vh;">
-          <button style="font-size: large; min-width: 20vh;" type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#RentModal">Rent</button>
+          <button style="font-size: large; min-width: 20vh;" type="button" class="btn btn-lg btn-primary"
+                  data-toggle="modal" data-target="#RentModal">Rent
+          </button>
         </div>
 
       </div>
@@ -92,7 +93,86 @@
   </div>
 
   <div class="page-data">
+    <p style="font-size: large; margin-left: 60%"><b>Full address:</b> {{house.addressLine1}} {{house.addressLine2}}
+      , {{house.city}}, {{house.country}}</p>
     <p style="font-size: medium">{{house.description}}</p>
+  </div>
+
+  <div style="display: none;">
+    <div id="Receipt" class="container" style="background-color: white;">
+      <div class="row">
+        <div class="well col-xs-10 col-sm-10 col-md-6 col-xs-offset-1 col-sm-offset-1 col-md-offset-3">
+          <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6">
+              <address>
+                <strong>rently.studio</strong>
+                <br>
+                Ukraine
+                <br>
+                Khmelnytskyi, 2900
+                <br>
+                <abbr>rently.studio@gmail.com</abbr>
+              </address>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 text-right">
+              <p>
+                <em>Date: {{payment.date}}</em>
+              </p>
+              <p>
+                <em>Receipt #: {{payment.id}}</em>
+              </p>
+            </div>
+          </div>
+          <div class="row">
+            <span>
+              <h1>Receipt</h1>
+            </span>
+            <table class="table table-hover">
+              <thead>
+              <tr>
+                <th>Building</th>
+                <th>#</th>
+                <th class="text-center">Price</th>
+                <th class="text-center">Total</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td class="col-md-9"><em>Rent {{payment.house.id}}</em></td>
+                <td class="col-md-1" style="text-align: center"> {{payment.months}} </td>
+                <td class="col-md-1 text-center">${{payment.house.price}}</td>
+                <td class="col-md-1 text-center">${{totalNoTax}}</td>
+              </tr>
+              <tr>
+                <td>  </td>
+                <td>  </td>
+                <td class="text-right">
+                  <p>
+                    <strong>Subtotal: </strong>
+                  </p>
+                  <p>
+                    <strong>Tax: </strong>
+                  </p></td>
+                <td class="text-center">
+                  <p>
+                    <strong>${{totalNoTax}}</strong>
+                  </p>
+                  <p>
+                    <strong>${{totalTax - totalNoTax}}</strong>
+                  </p></td>
+              </tr>
+              <tr>
+                <td>  </td>
+                <td>  </td>
+                <td class="text-right"><h4><strong>Total: </strong></h4></td>
+                <td class="text-center text-danger"><h4><strong>${{totalTax}}</strong></h4></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
 </div>
@@ -108,16 +188,19 @@
         </button>
       </div>
       <div class="modal-body">
-        <div class="d-flex justify-content-center" style="margin-bottom: 2vh;"> <h5>${{total}} to pay. Pay with:</h5> </div>
-        <div class="d-flex justify-content-center" style="margin-bottom: 2vh;">
-          <google-pay-button style="width: 30vh;"
-            environment="TEST" buttonType="buy" buttonColor="white"
-            [paymentRequest]="googlePayConfig"
-            (loadpaymentdata)="onLoadPaymentData($event)">
-          </google-pay-button>
-        </div>
-        <div class="d-flex justify-content-center" style="margin-bottom: 1vh;">
-          <ngx-paypal style="width: 30vh;" [config]="payPalConfig"></ngx-paypal>
+        <div>
+          <div class="d-flex justify-content-center" style="margin-bottom: 2vh;"><h5>${{totalTax}} to pay. Pay
+            with:</h5></div>
+          <div class="d-flex justify-content-center" style="margin-bottom: 2vh;">
+            <google-pay-button style="width: 30vh;"
+                               environment="TEST" buttonType="buy" buttonColor="white"
+                               [paymentRequest]="googlePayConfig"
+                               (loadpaymentdata)="onLoadPaymentData($event)">
+            </google-pay-button>
+          </div>
+          <div class="d-flex justify-content-center" style="margin-bottom: 1vh;">
+            <ngx-paypal style="width: 30vh;" [config]="payPalConfig"></ngx-paypal>
+          </div>
         </div>
 
       </div>

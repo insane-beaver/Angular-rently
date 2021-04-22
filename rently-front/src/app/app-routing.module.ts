@@ -6,6 +6,7 @@ import {HousesForRentComponent} from './pages/houses-for-rent/houses-for-rent.co
 import {CreateHouseComponent} from './pages/create-house/create-house.component';
 import {OwnerHousesListComponent} from './pages/owner-houses-list/owner-houses-list.component';
 import {HouseDetailsComponent} from './pages/house-details/house-details.component';
+import {FaqAndHelpComponent} from './pages/faq-and-help/faq-and-help.component';
 
 const routes: Routes = [
   {path: '', component: MainLayoutComponent, children: [
@@ -14,7 +15,8 @@ const routes: Routes = [
       {path: 'my-advertisements', component: OwnerHousesListComponent},
       {path: 'create-house', component: CreateHouseComponent},
       {path: 'create-house/:id', component: CreateHouseComponent},
-      {path: 'house-details/:id', component: HouseDetailsComponent}
+      {path: 'house-details/:id', component: HouseDetailsComponent},
+      {path: 'faq', component: FaqAndHelpComponent}
     ]}
 ];
 

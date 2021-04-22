@@ -5,6 +5,8 @@ export class House {
   price!: number;
   country!: string;
   city!: string;
+  addressLine1!: string;
+  addressLine2: string = "";
   postalCode!: string;
   roomsNumber!: number;
   bathroomsNumber!: number;

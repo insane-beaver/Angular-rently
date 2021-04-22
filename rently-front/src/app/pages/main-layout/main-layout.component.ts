@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import { AuthServiceService } from '../../services/auth-service.service';
-import {NgForm} from '@angular/forms';
+import {NgForm, NgModel} from '@angular/forms';
 import {Person} from '../../classes/person';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { Inf } from '../../classes/Inf';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
 @Component({
   selector: 'app-main-layout',
   templateUrl: './main-layout.component.html',
   styleUrls: ['./main-layout.component.sass']
 })
-export class MainLayoutComponent implements OnInit {
+export class MainLayoutComponent implements OnInit, AfterViewInit {
   isOpened = false;
   imagePath!: string;
 
@@ -20,15 +22,57 @@ export class MainLayoutComponent implements OnInit {
   email!: string;
   password!: string;
   isOwner: boolean = false;
+  agrrEula: boolean = false;
   mobile!: string;
+  verCode!: number;
+  recaptchaVerifier!: firebase.auth.RecaptchaVerifier;
+  recaptchaSolved: boolean = false;
 
   ngOnInit(): void {
+    window.onscroll = function(){
+      let header = document.getElementById("header") as HTMLElement;
+      let scrollToTopBtn = document.getElementById("scrollToTopBtn") as HTMLElement;
+      let sticky = header.offsetTop;
+
+      if (window.pageYOffset > sticky) {
+        header.classList.add("sticky");
+        scrollToTopBtn.style.display = "block"
+      } else {
+        header.classList.remove("sticky");
+        scrollToTopBtn.style.display = "none"
+      }
+    };
+
     this.storage.getInf();
-    this.checkDeviceType()
+    this.checkDeviceType();
     this.setProfileData();
+
+    window.addEventListener("orientationchange", function() {
+      if(!Inf.isDesktop) {
+        if(window.screen.orientation.angle != 0)
+          alert("Rotate your phone to portrait mode");
+      }
+    });
+  }
+  ngAfterViewInit(): void {
+    this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+      'callback': (response: any) => {
+        console.log("reCAPTCHA solved");
+        this.recaptchaSolved = true;
+      }
+    });
+    this.recaptchaVerifier.render();
   }
 
-  private setProfileData() {
+  scrollToTop() {
+    let rootElement = document.documentElement
+    rootElement.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    })
+  }
+
+  setProfileData() {
     if(Inf.isLoged) {
       this.name = Inf.person.name;
       this.email = Inf.person.email;
@@ -59,25 +103,57 @@ export class MainLayoutComponent implements OnInit {
     return Inf.isDesktop;
   }
 
-  openOverlay(): void {
+  toggleOverlay(options?: number): void {
+    let button = document.getElementById('menu') as HTMLElement;
     let sidebar = document.getElementById('mySidebar') as HTMLElement;
-    if (this.isOpened) {
-      sidebar.style.width = '0px';
+    let sidebarContent = document.getElementById('sidebar-content') as HTMLElement;
+    if(options==1) {
+      if (this.isOpened) {
+        button.classList.toggle('opened');
+        button.setAttribute('aria-expanded', String(button.classList.contains('opened')));
 
-      this.isOpened = false;
+        sidebar.style.width = '0px';
+        sidebarContent.className = "sidebar-content-close"
+
+        this.isOpened = false;
+      }
     }
     else {
-      sidebar.style.width = '200px';
+      button.classList.toggle('opened');
+      button.setAttribute('aria-expanded', String(button.classList.contains('opened')));
 
-      this.isOpened = true;
+      if (this.isOpened) {
+        sidebar.style.width = '0px';
+        sidebarContent.className = "sidebar-content-close"
+
+        this.isOpened = false;
+      }
+      else {
+        sidebar.style.width = '200px';
+        sidebarContent.className = "sidebar-content-open"
+
+        this.isOpened = true;
+      }
     }
   }
 
-  closeOverlay(): void {
-    let sidebar = document.getElementById('mySidebar') as HTMLElement;
-    sidebar.style.width = '0px';
+  eulaCheck() {
+    if(!this.agrrEula)
+      this.agrrEula = true;
+    else
+      this.agrrEula = false;
+  }
 
-    this.isOpened = false;
+  validateMobile(mobileInput: NgModel) {
+    let arr: string[] = mobileInput.viewModel.split('');
+    arr.forEach(element => {
+      if(element == '-') arr.splice(arr.indexOf(element),1);
+    });
+    if(arr.length>=3)
+      arr.splice(3, 0, '-');
+    if(arr.length>=7)
+      arr.splice(7, 0, '-');
+    this.mobile = arr.join('');
   }
 
   signUp(form: NgForm):void {
@@ -85,7 +161,7 @@ export class MainLayoutComponent implements OnInit {
     person.name = form.value.name;
     person.email = form.value.email;
     person.password = form.value.password;
-    person.isOwner = form.value.isOwner;
+    person.isOwner = false;
     form.reset();
     this.authService.SignUp(person);
 
@@ -116,7 +192,14 @@ export class MainLayoutComponent implements OnInit {
     person.mobileNumber = form.value.mobile;
     person.isOwner = form.value.isOwner;
 
-    this.authService.UpdateProfile(person);
+    if(this.recaptchaSolved) {
+      this.authService.UpdateProfile(person, this.recaptchaVerifier);
+    }
   }
+  public static showVerification() {
+    let div = document.getElementById('verification-code') as HTMLElement;
+    div.style.display = 'block';
+  }
+
 
 }

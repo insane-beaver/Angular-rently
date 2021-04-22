@@ -1,10 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {Inf} from '../../classes/Inf';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {House} from '../../classes/house';
 import {NgForm} from '@angular/forms';
 import {DatabaseProviderService} from '../../services/database-provider.service';
 import firebase from 'firebase/app';
+import {GooglePlaceDirective} from 'ngx-google-places-autocomplete';
+import {Address} from 'ngx-google-places-autocomplete/objects/address';
 
 @Component({
   selector: 'app-create-house',
@@ -77,6 +79,35 @@ export class CreateHouseComponent implements OnInit {
     })
   }
 
+  /*PLaces*/
+  @ViewChild("placesRef") placesRef!: GooglePlaceDirective;
+  private address!: Address;
+  private addressTouched: boolean = false;
+  public handleAddressChange(address: Address) {
+    this.address = address;
+    this.setAddress();
+    this.addressTouched = true;
+  }
+  private setAddress() {
+    if(this.address.address_components.length==7) {
+      this.house.addressLine1 = this.address.address_components[1].long_name + ", " + this.address.address_components[0].long_name;
+      this.house.city = this.address.address_components[2].long_name;
+      this.house.country = this.address.address_components[5].long_name;
+      this.house.postalCode = this.address.address_components[6].long_name;
+    }
+    else if(this.address.address_components.length==6) {
+      this.house.addressLine1 = this.address.address_components[0].long_name;
+      this.house.city = this.address.address_components[1].long_name;
+      this.house.country = this.address.address_components[4].long_name;
+      this.house.postalCode = this.address.address_components[5].long_name;
+    }
+    else if(this.address.address_components.length==5) {
+      this.house.city = this.address.address_components[0].long_name;
+      this.house.country = this.address.address_components[3].long_name;
+      this.house.postalCode = this.address.address_components[4].long_name;
+    }
+  }
+
   addHouse(form: NgForm):void {
     let alert = <HTMLElement> document.getElementById('alert');
     if (form.invalid) {
@@ -91,7 +122,11 @@ export class CreateHouseComponent implements OnInit {
       this.house.price = form.value.price;
       this.house.country = form.value.country;
       this.house.city = form.value.city;
+      this.house.addressLine1 = form.value.addressLine1;
+      this.house.addressLine2 = form.value.addressLine2;
+      if(this.house.addressLine2 == undefined) this.house.addressLine2 = "";
       this.house.postalCode = form.value.postalCode;
+      if(this.addressTouched) this.setAddress();
       this.house.roomsNumber = form.value.roomsNumber;
       this.house.bathroomsNumber = form.value.bathroomsNumber;
       this.house.description = form.value.description;

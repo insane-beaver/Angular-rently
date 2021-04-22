@@ -5,6 +5,9 @@ import { Person } from '../classes/person';
 import { Inf } from '../classes/Inf';
 import { LocalStorageService } from './local-storage.service';
 import {House} from '../classes/house';
+import {Help} from '../classes/help';
+import {FaqAndHelpComponent} from '../pages/faq-and-help/faq-and-help.component';
+import {Payment} from '../classes/payment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +15,8 @@ import {House} from '../classes/house';
 export class DatabaseProviderService {
   person_collection: string = "persons";
   houses_collection: string = "houses";
+  help_collection: string = "helps";
+  payments_collection: string = "payments"
 
 
   //person
@@ -160,6 +165,21 @@ export class DatabaseProviderService {
         }
       });
     })
+  }
+
+  //help
+  public saveHelp(help: Help) {
+    this.store.collection(this.help_collection).doc(help.id + '').set(Object.assign({}, help)).then(r  =>{
+      //alert("Dear, " + help.personName + ", we got your message and will answer you soon");
+      FaqAndHelpComponent.showSuccess();
+    });
+  }
+
+  //payments
+  public savePayment(payment: Payment) {
+    this.store.collection(this.payments_collection).doc(payment.id + '').set(Object.assign({}, payment)).then(r  =>{
+      console.log("payment saved");
+    });
   }
 
 }
