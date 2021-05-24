@@ -29,6 +29,11 @@ export class DatabaseProviderService {
   houses: Observable<House[]> = new Observable<House[]>();
   house_subscription!: Subscription;
 
+  //payments
+  paymentsColRe!: AngularFirestoreCollection<Payment>;
+  payments: Observable<Payment[]> = new Observable<Payment[]>();
+  payments_subscription!: Subscription;
+
 
   constructor(private store: AngularFirestore, private storage: LocalStorageService) {
     this.personsColRe = this.store.collection(this.person_collection);
@@ -36,6 +41,9 @@ export class DatabaseProviderService {
 
     this.houseColRe = this.store.collection(this.houses_collection);
     this.houses = this.houseColRe.valueChanges();
+
+    this.paymentsColRe = this.store.collection(this.payments_collection);
+    this.payments = this.paymentsColRe.valueChanges();
   }
 
   private removeDuplicates(data: Array<String>) {
@@ -180,6 +188,23 @@ export class DatabaseProviderService {
     this.store.collection(this.payments_collection).doc(payment.id + '').set(Object.assign({}, payment)).then(r  =>{
       console.log("payment saved");
     });
+  }
+
+  public async getPayments(): Promise<Payment[]> {
+    return new Promise<Payment[]>((resolve) => {
+      let payments = new Array<Payment>();
+      let was:boolean = false;
+      this.payments_subscription = this.payments.subscribe(value => {
+        if(!was) {
+          was = true;
+
+          for (let i in value) {
+            payments.push((value[i] as Payment));
+          }
+          resolve(payments);
+        }
+      });
+    })
   }
 
 }

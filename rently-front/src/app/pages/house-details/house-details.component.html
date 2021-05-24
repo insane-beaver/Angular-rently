@@ -49,7 +49,11 @@
             </tbody>
           </table>
         </div>
-        <h5>Owner: {{owner.name}}</h5>
+        <h5>Owner:
+          <a [routerLink]="['/owner-details',owner.id]" style="text-decoration: none; color: black;">
+            {{owner.name}}
+          </a>
+        </h5>
         <h6>Mobile:
           <a href="tel:{{owner.mobileNumber}}" style="color: black">{{owner.mobileNumber}}</a>
         </h6>

@@ -33,6 +33,7 @@ import { OwnerHousesListComponent } from './pages/owner-houses-list/owner-houses
 import { HouseDetailsComponent } from './pages/house-details/house-details.component';
 import { FaqAndHelpComponent } from './pages/faq-and-help/faq-and-help.component';
 import { EulaComponent } from './components/eula/eula.component';
+import { OwnerDetailsComponent } from './pages/owner-details/owner-details.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { EulaComponent } from './components/eula/eula.component';
     OwnerHousesListComponent,
     HouseDetailsComponent,
     FaqAndHelpComponent,
-    EulaComponent
+    EulaComponent,
+    OwnerDetailsComponent
   ],
     imports: [
       BrowserModule,
