@@ -2,7 +2,7 @@
 Angular SPA for house rent with java backend
 ___
 
-You can access already hosted project at: ---
+You can access already hosted project at: `https://rently.studio/`
 ___
 
 

@@ -50,7 +50,7 @@ import { OwnerDetailsComponent } from './pages/owner-details/owner-details.compo
     OwnerDetailsComponent
   ],
     imports: [
-      BrowserModule,
+      BrowserModule.withServerTransition({ appId: 'serverApp' }),
       AppRoutingModule,
       AngularFireModule.initializeApp(environment.config),
       AngularFireAuthModule,
