@@ -1,0 +1,21 @@
+<div class="main-content">
+  <div class="d-flex justify-content-center" *ngFor="let item of payments">
+    <div class="card text-center" style="margin-top: 2rem; width: 40em">
+      <div class="card-header">
+        {{item.id}}
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">{{getCategory(item.house.category)}}: {{item.house.country}} - {{item.house.city}}</h5>
+        <p class="card-text">
+          {{item.startMonth}}.{{item.startYear}} - {{item.endMonth}}.{{item.endYear}}
+          <br>
+          ${{item.totalPrice}}
+        </p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+      <div class="card-footer text-muted">
+        {{item.date}}
+      </div>
+    </div>
+  </div>
+</div>

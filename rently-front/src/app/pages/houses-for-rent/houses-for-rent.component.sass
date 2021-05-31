@@ -4,7 +4,7 @@
 .main-content
   margin-top: 1vh
   min-height: 92vh
-  background: $white
+  background: rgba($white, 0.95)
 
 .bar
   position: fixed
@@ -287,3 +287,14 @@ a
   top: 15px
   left: 0
 
+.responsive
+  width: 320px
+  height: 100px
+@media(min-width: 500px)
+  .responsive
+    width: 468px
+    height: 60px
+@media(min-width: 800px)
+  .responsive
+    width: 728px
+    height: 90px

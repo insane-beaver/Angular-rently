@@ -207,4 +207,40 @@ export class DatabaseProviderService {
     })
   }
 
+  public async getPaymentsFor(houseId: string): Promise<Payment[]> {
+    return new Promise<Payment[]>((resolve) => {
+      let payments = new Array<Payment>();
+      let was:boolean = false;
+      this.payments_subscription = this.payments.subscribe(value => {
+        if(!was) {
+          was = true;
+
+          for (let i in value) {
+            if(value[i].house.id == houseId)
+              payments.push((value[i] as Payment));
+          }
+          resolve(payments);
+        }
+      });
+    })
+  }
+
+  public async getPaymentsForUser(userId: string): Promise<Payment[]> {
+    return new Promise<Payment[]>((resolve) => {
+      let payments = new Array<Payment>();
+      let was:boolean = false;
+      this.payments_subscription = this.payments.subscribe(value => {
+        if(!was) {
+          was = true;
+
+          for (let i in value) {
+            if(value[i].renterId == userId)
+              payments.push((value[i] as Payment));
+          }
+          resolve(payments);
+        }
+      });
+    })
+  }
+
 }

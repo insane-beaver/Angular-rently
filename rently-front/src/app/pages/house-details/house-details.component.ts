@@ -6,9 +6,8 @@ import {Person} from '../../classes/person';
 import {Inf} from '../../classes/Inf';
 import {ICreateOrderRequest, IPayPalConfig} from 'ngx-paypal';
 import {Payment} from '../../classes/payment';
-import jspdf from 'jspdf';
-import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-house-details',
@@ -26,6 +25,19 @@ export class HouseDetailsComponent implements OnInit {
   totalNoTax!: number;
   totalTax!: number;
   slideIndex = 0;
+
+  startMonth!: string;
+  endMonth!: string;
+  start!: any;
+  end!: any;
+
+  //dates system
+  buttonText: string = "Check";
+  inProcess: boolean = false;
+  errorAlert: boolean = false;
+  validDates: boolean = false;
+  unavailableDates: any = new Array<String>();
+  //end
 
   ngOnInit() {
     this.database.getHousesPromise().then(value => {
@@ -92,6 +104,69 @@ export class HouseDetailsComponent implements OnInit {
       return "max-width: 110vh; max-height: 60vh;"
     else
       return "max-width: 99%; max-height: 30vh;"
+  }
+
+  CheckPeriod(form: NgForm):void {
+    this.buttonText = "Checking...";
+    this.inProcess = true;
+
+    this.startMonth = form.value.start_month;
+    this.endMonth = form.value.end_month;
+    this.start = this.startMonth.split('-');
+    this.end = this.endMonth.split('-');
+
+    this.payment.startYear = +(this.start[0]);
+    this.payment.startMonth = +(this.start[1]);
+    this.payment.endYear = +(this.end[0]);
+    this.payment.endMonth = +(this.end[1]);
+
+    let length = 0;
+    let wrongDate = false;
+    if(this.start[0] <= this.end[0]) {
+      length = this.end[1] - this.start[1] + (this.end[0] - this.start[0])*12 + 1;
+    }
+    if(length>=1) {
+      this.months = length;
+
+      this.database.getPaymentsFor(this.house.id).then(value => {
+        this.unavailableDates = new Array<String>();
+        value.forEach(item => {
+          for(let i = this.payment.startYear; i<=this.payment.endYear; ++i) {
+            for(let ii=item.startYear; ii<=item.endYear; ++ii) {
+              if(i==ii) {
+                for(let j = this.payment.startMonth; j<=this.payment.endMonth; ++j) {
+                  for(let jj = item.startMonth; jj<=item.endMonth; ++jj) {
+                    if(j==jj) {
+                      wrongDate = true;
+                      this.unavailableDates.push(j+"."+i);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        })
+      });
+    }
+    else {
+      wrongDate = true;
+    }
+
+    setTimeout(() => {
+      this.buttonText = "Check";
+      this.inProcess = false;
+      this.errorAlert = false;
+
+      if(wrongDate) {
+        this.errorAlert = true;
+        this.validDates = false;
+        form.reset();
+      }
+      else {
+        this.validDates = true;
+        this.countTotal();
+      }
+    }, 1500);
   }
 
   countTotal() {
@@ -214,8 +289,14 @@ export class HouseDetailsComponent implements OnInit {
     this.payment.date = dd + '.' + mm + '.' + yyyy + ' ' + today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
 
     this.payment.house = this.house;
-    this.payment.months = this.months;
+
+    this.payment.startYear = +(this.start[0]);
+    this.payment.startMonth = +(this.start[1]);
+    this.payment.endYear = +(this.end[0]);
+    this.payment.endMonth = +(this.end[1]);
+
     this.payment.renterId = Inf.person.id;
+    this.payment.totalPrice = this.totalTax
 
     setTimeout(() => this.printReceipt(), 100);
     this.database.savePayment(this.payment);

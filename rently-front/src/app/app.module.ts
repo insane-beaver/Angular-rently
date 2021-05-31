@@ -34,6 +34,7 @@ import { HouseDetailsComponent } from './pages/house-details/house-details.compo
 import { FaqAndHelpComponent } from './pages/faq-and-help/faq-and-help.component';
 import { EulaComponent } from './components/eula/eula.component';
 import { OwnerDetailsComponent } from './pages/owner-details/owner-details.component';
+import { RentsListComponent } from './pages/rents-list/rents-list.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { OwnerDetailsComponent } from './pages/owner-details/owner-details.compo
     HouseDetailsComponent,
     FaqAndHelpComponent,
     EulaComponent,
-    OwnerDetailsComponent
+    OwnerDetailsComponent,
+    RentsListComponent
   ],
     imports: [
       BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -60,7 +62,7 @@ import { OwnerDetailsComponent } from './pages/owner-details/owner-details.compo
       ReactiveFormsModule,
       AdsenseModule.forRoot({
         adClient: 'ca-pub-7793855420321475',
-        adSlot: 1549590434
+        adSlot: 6040528420
       }),
       GooglePayButtonModule,
       NgxPayPalModule,

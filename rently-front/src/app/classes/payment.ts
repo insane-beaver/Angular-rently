@@ -4,6 +4,10 @@ export class Payment {
   id!: string;
   date!: string;
   house: House = new House();
-  months!: number;
+  startMonth!: number;
+  startYear!: number;
+  endMonth!: number;
+  endYear!: number;
   renterId!: string;
+  totalPrice!: number;
 }
