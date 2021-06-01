@@ -3,13 +3,13 @@
     <h4>{{getHouseCategory()}}</h4>
   </div>
 
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
-      <div class="col-lg-11" style="{{getMargin()}}">
+      <div class="col-lg-7">
         <div class="slideshow-container">
           <div class="mySlides" *ngFor="let slide of house.photos">
             <div class="d-flex justify-content-center">
-              <img src="{{slide}}" style="{{getPreparedSize()}}">
+              <img src="{{slide}}" style="border-radius: 5px; overflow: hidden {{getPreparedSize()}}">
             </div>
           </div>
 
@@ -17,10 +17,9 @@
           <a class="next" (click)="plusSlides(1)">&#10095;</a>
         </div>
       </div>
-      <div class="col-md-auto">
-
+      <div class="col-lg-5">
         <div class="d-flex align-items-center">
-          <table class="table borderless" style="max-width: 40vh; font-size: large;">
+          <table class="table borderless" style="max-width: 30vw; font-size: large;">
             <tbody>
             <tr>
               <td><b>Category:</b></td>
@@ -49,37 +48,50 @@
             </tbody>
           </table>
         </div>
-        <h5>Owner:
-          <a [routerLink]="['/owner-details',owner.id]" style="text-decoration: none; color: black;">
-            {{owner.name}}
-          </a>
-        </h5>
-        <h6>Mobile:
-          <a href="tel:{{owner.mobileNumber}}" style="color: black">{{owner.mobileNumber}}</a>
-        </h6>
-
+        <div class="d-flex align-items-center" style="margin-top: -1rem; margin-bottom: 1rem">
+          <table style="font-size: large;">
+            <tbody>
+            <tr>
+              <td><b>Owner:</b></td>
+              <td>
+                <a [routerLink]="['/owner-details',owner.id]" style="text-decoration: none; color: black;">
+                  {{owner.name}}
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td><b>Mobile:</b></td>
+              <td>
+                <a href="tel:{{owner.mobileNumber}}" style="color: black">{{owner.mobileNumber}}</a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
         <div class="d-flex align-content-center">
           <form #MonthsForm="ngForm" (ngSubmit)="CheckPeriod(MonthsForm)">
-            <table class="table borderless" style="max-width: 40vh; margin-top: 2vh; font-size: large;">
+            <table style="font-size: large;">
               <tbody>
-                <tr>
-                  <td><b>First month</b></td>
-                  <td><b>Last month</b></td>
-                </tr>
-                <tr>
-                  <td style="max-width: 10vh">
-                    <input type="month" class="form-control" #start_month="ngModel" name="start_month" [ngModel]="startMonth" required>
-                  </td>
-                  <td style="max-width: 10vh">
-                    <input type="month" class="form-control" #end_month="ngModel" name="end_month" [ngModel]="endMonth" required>
-                  </td>
-                </tr>
+              <tr style="text-align: center">
+                <td><b>First month</b></td>
+                <td><br></td>
+                <td><b>Last month</b></td>
+              </tr>
+              <tr>
+                <td style="max-width: 45vw">
+                  <input type="month" class="form-control" #start_month="ngModel" name="start_month" [ngModel]="startMonth" required>
+                </td>
+                <td><br></td>
+                <td style="max-width: 45vw">
+                  <input type="month" class="form-control" #end_month="ngModel" name="end_month" [ngModel]="endMonth" required>
+                </td>
+              </tr>
               </tbody>
             </table>
-            <div class="alert alert-danger" role="alert" style="margin-top: -1.5rem;"[hidden]="!errorAlert">
+            <div class="alert alert-danger" role="alert" style="margin-top: 0.5rem; margin-bottom: 0" [hidden]="!errorAlert">
               <strong class="pointer" data-toggle="modal" data-target="#UnavailableDates">Dates</strong> are used
             </div>
-            <div class="d-flex justify-content-center" style="margin-top: -0.5rem;">
+            <div class="d-flex justify-content-center" style="margin-top: 0.5rem">
               <button type="submit" class="btn btn-md btn-secondary" style="width: 10rem;" [disabled]="MonthsForm.invalid">
                 {{buttonText}}
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" [hidden]="!inProcess"></span>
@@ -87,9 +99,8 @@
             </div>
           </form>
         </div>
-
         <div class="d-flex align-content-center">
-          <table class="table borderless" style="max-width: 40vh; font-size: large;">
+          <table class="table borderless" style="max-width: 30vw; font-size: large;">
             <tbody>
             <tr>
               <td><b>Total:</b></td>
@@ -100,9 +111,8 @@
             </tbody>
           </table>
         </div>
-
-        <div class="d-flex justify-content-center" style="margin-top: -3vh;">
-          <button style="font-size: large; min-width: 20vh;" type="button" class="btn btn-lg btn-primary"
+        <div class="d-flex justify-content-center" style="margin-top: -3vh; {{getButtonSize()}}">
+          <button style="font-size: large; width: 10rem" type="button" class="btn btn-lg btn-primary"
                   data-toggle="modal" data-target="#RentModal" [disabled]="!validDates">Rent
           </button>
         </div>

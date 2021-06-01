@@ -40,6 +40,10 @@ export class HouseDetailsComponent implements OnInit {
   //end
 
   ngOnInit() {
+    /*let today = new Date();
+    this.startMonth = today.getMonth()+'.'+today.getFullYear();
+    this.endMonth = this.startMonth;*/
+
     this.database.getHousesPromise().then(value => {
       this.route.params.subscribe((params: Params) => {
         this.house = new House();
@@ -93,17 +97,17 @@ export class HouseDetailsComponent implements OnInit {
     else
       return "House"
   }
-  getMargin() {
-    if(Inf.isDesktop)
-      return "margin-left: -20%"
-    else
-      return ""
-  }
   getPreparedSize() {
     if(Inf.isDesktop)
-      return "max-width: 110vh; max-height: 60vh;"
+      return "max-width: 96%; height: 60vh;"
     else
-      return "max-width: 99%; max-height: 30vh;"
+      return "max-width: 100%; height: 30vh;"
+  }
+  getButtonSize() {
+    if(Inf.isDesktop)
+      return "max-width: 27vw"
+    else
+      return "max-width: 100vw"
   }
 
   CheckPeriod(form: NgForm):void {
