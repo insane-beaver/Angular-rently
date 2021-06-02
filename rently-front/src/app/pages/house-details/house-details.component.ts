@@ -99,9 +99,9 @@ export class HouseDetailsComponent implements OnInit {
   }
   getPreparedSize() {
     if(Inf.isDesktop)
-      return "max-width: 96%; height: 60vh;"
+      return "max-width: 95vw; max-height: 60vh;"
     else
-      return "max-width: 100%; height: 30vh;"
+      return "max-width: 95vw; max-height: 30vh;"
   }
   getButtonSize() {
     if(Inf.isDesktop)

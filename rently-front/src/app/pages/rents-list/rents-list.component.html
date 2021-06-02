@@ -5,7 +5,9 @@
         {{item.id}}
       </div>
       <div class="card-body">
-        <h5 class="card-title">{{getCategory(item.house.category)}}: {{item.house.country}} - {{item.house.city}}</h5>
+        <a [routerLink]="['/house-details',item.house.id]" style="text-decoration: none; color: #000000;">
+          <h5 class="card-title">{{getCategory(item.house.category)}}: {{item.house.country}} - {{item.house.city}}</h5>
+        </a>
         <p class="card-text">
           {{item.startMonth}}.{{item.startYear}} - {{item.endMonth}}.{{item.endYear}}
           <br>

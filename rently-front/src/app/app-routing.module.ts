@@ -9,6 +9,7 @@ import {HouseDetailsComponent} from './pages/house-details/house-details.compone
 import {FaqAndHelpComponent} from './pages/faq-and-help/faq-and-help.component';
 import {OwnerDetailsComponent} from './pages/owner-details/owner-details.component';
 import {RentsListComponent} from './pages/rents-list/rents-list.component';
+import {ClientsComponent} from './pages/clients/clients.component';
 
 const routes: Routes = [
   {path: '', component: MainLayoutComponent, children: [
@@ -20,6 +21,7 @@ const routes: Routes = [
       {path: 'house-details/:id', component: HouseDetailsComponent},
       {path: 'owner-details/:id', component: OwnerDetailsComponent},
       {path: 'my-rents', component: RentsListComponent},
+      {path: 'my-clients', component: ClientsComponent},
       {path: 'faq', component: FaqAndHelpComponent}
     ]}
 ];

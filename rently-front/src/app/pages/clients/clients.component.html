@@ -1,0 +1,25 @@
+<div class="main-content">
+  <div class="d-flex justify-content-center" *ngFor="let item of payments">
+    <div class="card text-center" style="margin-top: 2rem; width: 40em">
+      <div class="card-header">
+        {{item.payment.id}}
+      </div>
+      <div class="card-body">
+        <a [routerLink]="['/house-details',item.payment.house.id]" style="text-decoration: none; color: #000000;">
+          <h5 class="card-title">{{getCategory(item.payment.house.category)}}: {{item.payment.house.country}} - {{item.payment.house.city}}</h5>
+        </a>
+        <p class="card-text">
+          {{item.payment.startMonth}}.{{item.payment.startYear}} - {{item.payment.endMonth}}.{{item.payment.endYear}}
+          <br>
+          ${{item.payment.totalPrice}}
+        </p>
+        <p class="card-text">
+          <strong>Renter:</strong> {{item.renterInfo.name}} - <a href="tel:{{item.renterInfo.mobileNumber}}" style="color: black">{{item.renterInfo.mobileNumber}}</a>
+        </p>
+      </div>
+      <div class="card-footer text-muted">
+        {{item.payment.date}}
+      </div>
+    </div>
+  </div>
+</div>
