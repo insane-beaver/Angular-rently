@@ -10,6 +10,11 @@ import { HousesForRentComponent } from './pages/houses-for-rent/houses-for-rent.
 import { HouseCardComponent } from './components/house-card/house-card.component';
 import { LocalStorageService } from './services/local-storage.service';
 
+/*Translation*/
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+
 /*PLACES*/
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 
@@ -35,6 +40,8 @@ import { FaqAndHelpComponent } from './pages/faq-and-help/faq-and-help.component
 import { EulaComponent } from './components/eula/eula.component';
 import { OwnerDetailsComponent } from './pages/owner-details/owner-details.component';
 import { RentsListComponent } from './pages/rents-list/rents-list.component';
+import { ClientsComponent } from './pages/clients/clients.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -49,11 +56,21 @@ import { RentsListComponent } from './pages/rents-list/rents-list.component';
     FaqAndHelpComponent,
     EulaComponent,
     OwnerDetailsComponent,
-    RentsListComponent
+    RentsListComponent,
+    ClientsComponent,
+    NotFoundComponent
   ],
     imports: [
       BrowserModule.withServerTransition({ appId: 'serverApp' }),
       AppRoutingModule,
+      HttpClientModule,
+      TranslateModule.forRoot({
+        loader: {
+          provide: TranslateLoader,
+          useFactory: httpTranslateLoader,
+          deps: [HttpClient]
+        }
+      }),
       AngularFireModule.initializeApp(environment.config),
       AngularFireAuthModule,
       AngularFirestoreModule,
@@ -71,4 +88,10 @@ import { RentsListComponent } from './pages/rents-list/rents-list.component';
   providers: [LocalStorageService],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
+
+// AOT compilation support
+export function httpTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}

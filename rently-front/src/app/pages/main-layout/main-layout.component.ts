@@ -6,6 +6,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { Inf } from '../../classes/Inf';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-main-layout',
@@ -16,7 +17,7 @@ export class MainLayoutComponent implements OnInit, AfterViewInit {
   isOpened = false;
   imagePath!: string;
 
-  constructor(public authService: AuthServiceService, private storage: LocalStorageService) { }
+  constructor(public authService: AuthServiceService, private storage: LocalStorageService, public translate: TranslateService) { }
 
   name!: string;
   email!: string;
@@ -44,6 +45,7 @@ export class MainLayoutComponent implements OnInit, AfterViewInit {
     };
 
     this.storage.getInf();
+
     this.checkDeviceType();
     this.setProfileData();
 
@@ -201,5 +203,13 @@ export class MainLayoutComponent implements OnInit, AfterViewInit {
     div.style.display = 'block';
   }
 
+  switchLang(lang: string) {
+    this.translate.use(lang);
+    Inf.language = lang;
+    this.storage.saveInf();
+  }
+  isSelectedLanguage (language: string) {
+    return language === Inf.language;
+  }
 
 }

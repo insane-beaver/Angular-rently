@@ -1,6 +1,13 @@
 <div class="main-content">
   <div class="d-flex justify-content-center">
-    <h4>{{getHouseCategory()}}</h4>
+    <h4
+      *ngIf="house.category==1">{{'flat' | translate }} {{'in' | translate }} {{house.city}}
+      <svg *ngIf="house.verified" width="28" height="28" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="m256 0c-141.164062 0-256 114.835938-256 256s114.835938 256 256 256 256-114.835938 256-256-114.835938-256-256-256zm0 0" fill="#2196f3"/><path d="m385.75 201.75-138.667969 138.664062c-4.160156 4.160157-9.621093 6.253907-15.082031 6.253907s-10.921875-2.09375-15.082031-6.253907l-69.332031-69.332031c-8.34375-8.339843-8.34375-21.824219 0-30.164062 8.339843-8.34375 21.820312-8.34375 30.164062 0l54.25 54.25 123.585938-123.582031c8.339843-8.34375 21.820312-8.34375 30.164062 0 8.339844 8.339843 8.339844 21.820312 0 30.164062zm0 0" fill="#fafafa"/></svg>
+    </h4>
+    <h4
+      *ngIf="house.category==2">{{'house' | translate }} {{'in' | translate }} {{house.city}}
+      <svg *ngIf="house.verified" width="28" height="28" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="m256 0c-141.164062 0-256 114.835938-256 256s114.835938 256 256 256 256-114.835938 256-256-114.835938-256-256-256zm0 0" fill="#2196f3"/><path d="m385.75 201.75-138.667969 138.664062c-4.160156 4.160157-9.621093 6.253907-15.082031 6.253907s-10.921875-2.09375-15.082031-6.253907l-69.332031-69.332031c-8.34375-8.339843-8.34375-21.824219 0-30.164062 8.339843-8.34375 21.820312-8.34375 30.164062 0l54.25 54.25 123.585938-123.582031c8.339843-8.34375 21.820312-8.34375 30.164062 0 8.339844 8.339843 8.339844 21.820312 0 30.164062zm0 0" fill="#fafafa"/></svg>
+    </h4>
   </div>
 
   <div class="container-fluid">
@@ -22,27 +29,27 @@
           <table class="table borderless" style="max-width: 30vw; font-size: large;">
             <tbody>
             <tr>
-              <td><b>Category:</b></td>
+              <td><b>{{'category' | translate }}:</b></td>
               <td>{{getCt()}}</td>
             </tr>
             <tr>
-              <td><b>Country:</b></td>
+              <td><b>{{'country' | translate }}:</b></td>
               <td>{{house.country}}</td>
             </tr>
             <tr>
-              <td><b>City:</b></td>
+              <td><b>{{'city' | translate }}:</b></td>
               <td>{{house.city}}</td>
             </tr>
             <tr>
-              <td><b>Rooms:</b></td>
+              <td><b>{{'roomsDet' | translate }}:</b></td>
               <td>{{house.roomsNumber}}</td>
             </tr>
             <tr>
-              <td><b>Bathrooms:</b></td>
+              <td><b>{{'bathroomsDet' | translate }}:</b></td>
               <td>{{house.bathroomsNumber}}</td>
             </tr>
             <tr>
-              <td><b>Price:</b></td>
+              <td><b>{{'price' | translate }}:</b></td>
               <td>${{house.price}}</td>
             </tr>
             </tbody>
@@ -52,7 +59,7 @@
           <table style="font-size: large;">
             <tbody>
             <tr>
-              <td><b>Owner:</b></td>
+              <td><b>{{'owner' | translate }}:</b></td>
               <td>
                 <a [routerLink]="['/owner-details',owner.id]" style="text-decoration: none; color: black;">
                   {{owner.name}}
@@ -60,7 +67,7 @@
               </td>
             </tr>
             <tr>
-              <td><b>Mobile:</b></td>
+              <td><b>{{'mobile' | translate }}:</b></td>
               <td>
                 <a href="tel:{{owner.mobileNumber}}" style="color: black">{{owner.mobileNumber}}</a>
               </td>
@@ -73,28 +80,33 @@
             <table style="font-size: large;">
               <tbody>
               <tr style="text-align: center">
-                <td><b>First month</b></td>
+                <td><b>{{'firstMonth' | translate }}</b></td>
                 <td><br></td>
-                <td><b>Last month</b></td>
+                <td><b>{{'lastMonth' | translate }}</b></td>
               </tr>
               <tr>
                 <td style="max-width: 45vw">
-                  <input type="month" class="form-control" #start_month="ngModel" name="start_month" [ngModel]="startMonth" required>
+                  <input type="month" class="form-control" #start_month="ngModel" name="start_month"
+                         [ngModel]="startMonth" required>
                 </td>
                 <td><br></td>
                 <td style="max-width: 45vw">
-                  <input type="month" class="form-control" #end_month="ngModel" name="end_month" [ngModel]="endMonth" required>
+                  <input type="month" class="form-control" #end_month="ngModel" name="end_month" [ngModel]="endMonth"
+                         required>
                 </td>
               </tr>
               </tbody>
             </table>
-            <div class="alert alert-danger" role="alert" style="margin-top: 0.5rem; margin-bottom: 0" [hidden]="!errorAlert">
+            <div class="alert alert-danger" role="alert" style="margin-top: 0.5rem; margin-bottom: 0"
+                 [hidden]="!errorAlert">
               <strong class="pointer" data-toggle="modal" data-target="#UnavailableDates">Dates</strong> are used
             </div>
             <div class="d-flex justify-content-center" style="margin-top: 0.5rem">
-              <button type="submit" class="btn btn-md btn-secondary" style="width: 10rem;" [disabled]="MonthsForm.invalid">
+              <button type="submit" class="btn btn-md btn-secondary" style="width: 10rem;"
+                      [disabled]="MonthsForm.invalid">
                 {{buttonText}}
-                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" [hidden]="!inProcess"></span>
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
+                      [hidden]="!inProcess"></span>
               </button>
             </div>
           </form>
@@ -103,9 +115,9 @@
           <table class="table borderless" style="max-width: 30vw; font-size: large;">
             <tbody>
             <tr>
-              <td><b>Total:</b></td>
+              <td><b>{{'total' | translate }}:</b></td>
               <td>
-                <p>${{totalTax}}</p>
+                <p>${{total}}</p>
               </td>
             </tr>
             </tbody>
@@ -113,7 +125,7 @@
         </div>
         <div class="d-flex justify-content-center" style="margin-top: -3vh; {{getButtonSize()}}">
           <button style="font-size: large; width: 10rem" type="button" class="btn btn-lg btn-primary"
-                  data-toggle="modal" data-target="#RentModal" [disabled]="!validDates">Rent
+                  data-toggle="modal" data-target="#RentModal" [disabled]="!validDates">{{'rent' | translate }}
           </button>
         </div>
       </div>
@@ -121,7 +133,8 @@
   </div>
 
   <div class="page-data">
-    <p style="font-size: large; margin-left: 60%"><b>Full address:</b> {{house.addressLine1}} {{house.addressLine2}}
+    <p style="font-size: large; margin-left: 60%"><b>{{'fullAddress' | translate }}
+      :</b> {{house.addressLine1}} {{house.addressLine2}}
       , {{house.city}}, {{house.country}}</p>
     <p style="font-size: medium">{{house.description}}</p>
   </div>
@@ -167,9 +180,10 @@
               <tbody>
               <tr>
                 <td class="col-md-9"><em>Rent {{payment.house.id}}</em></td>
-                <td class="col-md-1" style="text-align: center">{{payment.startMonth}}.{{payment.startYear}} - {{payment.endMonth}}.{{payment.endYear}}</td>
+                <td class="col-md-1" style="text-align: center">{{payment.startMonth}}.{{payment.startYear}}
+                  - {{payment.endMonth}}.{{payment.endYear}}</td>
                 <td class="col-md-1 text-center">${{payment.house.price}}</td>
-                <td class="col-md-1 text-center">${{totalNoTax}}</td>
+                <td class="col-md-1 text-center">${{total}}</td>
               </tr>
               <tr>
                 <td>  </td>
@@ -183,17 +197,15 @@
                   </p></td>
                 <td class="text-center">
                   <p>
-                    <strong>${{totalNoTax}}</strong>
+                    <strong>${{total}}</strong>
                   </p>
-                  <p>
-                    <strong>${{totalTax - totalNoTax}}</strong>
-                  </p></td>
+                </td>
               </tr>
               <tr>
                 <td>  </td>
                 <td>  </td>
                 <td class="text-right"><h4><strong>Total: </strong></h4></td>
-                <td class="text-center text-danger"><h4><strong>${{totalTax}}</strong></h4></td>
+                <td class="text-center text-danger"><h4><strong>${{total}}</strong></h4></td>
               </tr>
               </tbody>
             </table>
@@ -210,15 +222,14 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="RentTitle">Place Order</h5>
+        <h5 class="modal-title" id="RentTitle">{{'placeOrder' | translate }}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <div>
-          <div class="d-flex justify-content-center" style="margin-bottom: 2vh;"><h5>${{totalTax}} to pay. Pay
-            with:</h5></div>
+          <div class="d-flex justify-content-center" style="margin-bottom: 2vh;"><h5>${{total}} {{'toPay' | translate }}:</h5></div>
           <div class="d-flex justify-content-center" style="margin-bottom: 2vh;">
             <google-pay-button style="width: 30vh;"
                                environment="TEST" buttonType="buy" buttonColor="white"
@@ -236,7 +247,8 @@
   </div>
 </div>
 
-<div class="modal fade" id="UnavailableDates" tabindex="-1" role="dialog" aria-labelledby="DatesTitle" aria-hidden="true">
+<div class="modal fade" id="UnavailableDates" tabindex="-1" role="dialog" aria-labelledby="DatesTitle"
+     aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">

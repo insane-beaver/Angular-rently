@@ -15,6 +15,7 @@ export class LocalStorageService {
     let person: Person = Inf.person;
     this.storage.set('Inf_isLoged', isLoged);
     this.storage.set('Inf_person', person);
+    this.storage.set('Inf_language', Inf.language);
   }
 
   public getInf(): void {
@@ -24,5 +25,8 @@ export class LocalStorageService {
     Inf.person = this.storage.get('Inf_person');
     if(Inf.person == undefined)
       Inf.person = new Person();
+    Inf.language = this.storage.get('Inf_language');
+    if(Inf.language == undefined)
+      Inf.language = "en";
   }
 }

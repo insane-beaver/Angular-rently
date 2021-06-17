@@ -10,6 +10,7 @@ import {FaqAndHelpComponent} from './pages/faq-and-help/faq-and-help.component';
 import {OwnerDetailsComponent} from './pages/owner-details/owner-details.component';
 import {RentsListComponent} from './pages/rents-list/rents-list.component';
 import {ClientsComponent} from './pages/clients/clients.component';
+import {NotFoundComponent} from './not-found/not-found.component';
 
 const routes: Routes = [
   {path: '', component: MainLayoutComponent, children: [
@@ -23,7 +24,9 @@ const routes: Routes = [
       {path: 'my-rents', component: RentsListComponent},
       {path: 'my-clients', component: ClientsComponent},
       {path: 'faq', component: FaqAndHelpComponent}
-    ]}
+    ]},
+  {path: '404', component: NotFoundComponent},
+  {path: '**', redirectTo: '/404'}
 ];
 
 @NgModule({

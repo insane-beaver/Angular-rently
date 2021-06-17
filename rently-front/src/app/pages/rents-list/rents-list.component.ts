@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {DatabaseProviderService} from '../../services/database-provider.service';
 import {Inf} from '../../classes/Inf';
 import {Payment} from '../../classes/payment';
@@ -10,7 +10,8 @@ import {Payment} from '../../classes/payment';
 })
 export class RentsListComponent implements OnInit {
 
-  constructor(private database: DatabaseProviderService) { }
+  constructor(private database: DatabaseProviderService) {
+  }
 
   payments!: Array<Payment>;
 
@@ -22,10 +23,11 @@ export class RentsListComponent implements OnInit {
   }
 
   getCategory(category: number) {
-    if(category ==1)
-      return "Flat";
-    else
+    if (category == 1) {
+      return 'Flat';
+    } else {
       return "House";
+    }
   }
 
 }

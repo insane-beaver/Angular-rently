@@ -6,7 +6,10 @@
       </div>
       <div class="card-body">
         <a [routerLink]="['/house-details',item.payment.house.id]" style="text-decoration: none; color: #000000;">
-          <h5 class="card-title">{{getCategory(item.payment.house.category)}}: {{item.payment.house.country}} - {{item.payment.house.city}}</h5>
+          <h5 *ngIf="item.payment.house.category==1" class="card-title">{{'flat' | translate }}: {{item.payment.house.country}}
+            - {{item.payment.house.city}}</h5>
+          <h5 *ngIf="item.payment.house.category==2" class="card-title">{{'house' | translate }}: {{item.payment.house.country}}
+            - {{item.payment.house.city}}</h5>
         </a>
         <p class="card-text">
           {{item.payment.startMonth}}.{{item.payment.startYear}} - {{item.payment.endMonth}}.{{item.payment.endYear}}
@@ -14,7 +17,8 @@
           ${{item.payment.totalPrice}}
         </p>
         <p class="card-text">
-          <strong>Renter:</strong> {{item.renterInfo.name}} - <a href="tel:{{item.renterInfo.mobileNumber}}" style="color: black">{{item.renterInfo.mobileNumber}}</a>
+          <strong>{{'renter' | translate }}:</strong> {{item.renterInfo.name}} - <a
+          href="tel:{{item.renterInfo.mobileNumber}}" style="color: black">{{item.renterInfo.mobileNumber}}</a>
         </p>
       </div>
       <div class="card-footer text-muted">

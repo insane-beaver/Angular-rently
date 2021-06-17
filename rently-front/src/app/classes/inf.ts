@@ -7,4 +7,5 @@ export class Inf {
   public static houses: House[] = new Array<House>();
   public static isDesktop: boolean;
   public static searchCity: string;
+  public static language: string = "en";
 }

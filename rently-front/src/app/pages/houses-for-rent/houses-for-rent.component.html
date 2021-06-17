@@ -3,16 +3,18 @@
     <form #SortForm="ngForm" (ngSubmit)="Sort(SortForm)">
       <div style="padding-top: 1em; padding-left: 1vh;">
         <div class="d-flex justify-content-center">
-          <select class="form-control" style="max-width: 80%" #sort_select="ngModel" name="sortType" [ngModel]="sortType">
-            <option value='0' selected disabled>Sort by price</option>
-            <option value='0'>None</option>
+          <select class="form-control" style="max-width: 80%" #sort_select="ngModel" name="sortType"
+                  [ngModel]="sortType">
+            <option value='0' selected disabled>{{'sortByPrice' | translate }}</option>
+            <option value='0'>{{'mostRelevant' | translate }}</option>
             <option disabled>───────────</option>
-            <option value="1">From max to min</option>
-            <option value="2">From min to max</option>
+            <option value="1">{{'maxToMin' | translate }}</option>
+            <option value="2">{{'minToMax' | translate }}</option>
           </select>
         </div>
         <div class="d-flex justify-content-center">
-          <button type="submit" class="btn btn-medium search-button" style="margin-top: 0.5em; margin-left: 2em; max-width: 80%">Sort</button>
+          <button type="submit" class="btn btn-medium search-button"
+                  style="margin-top: 0.5em; margin-left: 2em; max-width: 80%">{{'sort' | translate }}</button>
         </div>
       </div>
     </form>
@@ -23,25 +25,29 @@
           <div class="card">
             <article class="filter-group">
               <header class="card-header">
-                <a href="#" data-toggle="collapse" data-target="#collapse_aside1" data-abc="true" aria-expanded="false" class="collapsed">
+                <a href="#" data-toggle="collapse" data-target="#collapse_aside1" data-abc="true" aria-expanded="false"
+                   class="collapsed">
                   <i class="icon-control fa fa-chevron-down"></i>
-                  <h6 class="title">Categories </h6>
+                  <h6 class="title">{{'categories' | translate }} </h6>
                 </a>
               </header>
               <div class="filter-content collapse" id="collapse_aside1" style="">
                 <div class="card-body">
                   <ul class="list-menu">
-                    <li><a style="cursor: pointer;" data-abc="true" (click)="OnlyHouses()">Houses </a></li>
-                    <li><a style="cursor: pointer;" data-abc="true" (click)="OnlyFlats()">Flats </a></li>
+                    <li><a style="cursor: pointer;" data-abc="true"
+                           (click)="OnlyHouses()">{{'houses' | translate }} </a></li>
+                    <li><a style="cursor: pointer;" data-abc="true" (click)="OnlyFlats()">{{'flats' | translate }} </a>
+                    </li>
                   </ul>
                 </div>
               </div>
             </article>
             <article class="filter-group">
               <header class="card-header">
-                <a href="#" data-toggle="collapse" data-target="#collapse_aside2" data-abc="true" aria-expanded="false" class="collapsed">
+                <a href="#" data-toggle="collapse" data-target="#collapse_aside2" data-abc="true" aria-expanded="false"
+                   class="collapsed">
                   <i class="icon-control fa fa-chevron-down"></i>
-                  <h6 class="title">Price </h6>
+                  <h6 class="title">{{'price' | translate }} </h6>
                 </a>
               </header>
               <div class="filter-content collapse" id="collapse_aside2" style="">
@@ -49,11 +55,13 @@
                   <div class="form-row">
                     <div class="form-group col-md-6">
                       <label>Min</label>
-                      <div class="dollar"><input class="form-control" type="number" #min_select="ngModel" name="minPrice" [ngModel]="minPrice"></div>
+                      <div class="dollar"><input class="form-control" type="number" #min_select="ngModel"
+                                                 name="minPrice" min="0" step="50" [ngModel]="minPrice"></div>
                     </div>
                     <div class="form-group text-right col-md-6">
                       <label>Max</label>
-                      <div class="dollar"><input class="form-control" type="number" #max_select="ngModel" name="maxPrice" [ngModel]="maxPrice"></div>
+                      <div class="dollar"><input class="form-control" type="number" #max_select="ngModel"
+                                                 name="maxPrice" min="0" step="50" [ngModel]="maxPrice"></div>
                     </div>
                   </div>
                 </div>
@@ -61,15 +69,17 @@
             </article>
             <article class="filter-group">
               <header class="card-header">
-                <a href="#" data-toggle="collapse" data-target="#collapse_aside3" data-abc="true" aria-expanded="false" class="collapsed">
+                <a href="#" data-toggle="collapse" data-target="#collapse_aside3" data-abc="true" aria-expanded="false"
+                   class="collapsed">
                   <i class="icon-control fa fa-chevron-down"></i>
-                  <h6 class="title">Rooms </h6>
+                  <h6 class="title">{{'roomsDet' | translate }} </h6>
                 </a>
               </header>
               <div class="filter-content collapse" id="collapse_aside3" style="">
                 <div class="card-body">
                   <label class="checkbox-btn">
-                    <input type="checkbox" class="custom-checkbox" #rooms_1_select="ngModel" name="rooms_1" [ngModel]="rooms_1">
+                    <input type="checkbox" class="custom-checkbox" #rooms_1_select="ngModel" name="rooms_1"
+                           [ngModel]="rooms_1">
                     <span class="btn btn-light"> 1 </span>
                   </label>
                   <label class="checkbox-btn">
@@ -93,15 +103,17 @@
             </article>
             <article class="filter-group">
               <header class="card-header">
-                <a href="#" data-toggle="collapse" data-target="#collapse_aside4" data-abc="true" aria-expanded="false" class="collapsed">
+                <a href="#" data-toggle="collapse" data-target="#collapse_aside4" data-abc="true" aria-expanded="false"
+                   class="collapsed">
                   <i class="icon-control fa fa-chevron-down"></i>
-                  <h6 class="title">Bathrooms </h6>
+                  <h6 class="title">{{'bathroomsDet' | translate }} </h6>
                 </a>
               </header>
               <div class="filter-content collapse" id="collapse_aside4" style="">
                 <div class="card-body">
                   <label class="checkbox-btn">
-                    <input type="checkbox" class="custom-checkbox" #bathrooms_1_select="ngModel" name="bathrooms_1" [ngModel]="bathrooms_1">
+                    <input type="checkbox" class="custom-checkbox" #bathrooms_1_select="ngModel" name="bathrooms_1"
+                           [ngModel]="bathrooms_1">
                     <span class="btn btn-light"> 1 </span>
                   </label>
                   <label class="checkbox-btn">
@@ -124,10 +136,12 @@
               </div>
             </article>
             <article class="filter-group">
-              <a class="highlight-button btn btn-medium button xs-margin-bottom-five" data-abc="true" (click)="Filter(FilterForm)">Apply Now</a>
+              <a class="highlight-button btn btn-medium button xs-margin-bottom-five" data-abc="true"
+                 (click)="Filter(FilterForm)">{{'apply' | translate }}</a>
             </article>
             <article class="filter-group" style="margin-top: 0.5em;">
-              <a class="highlight-button btn btn-medium button xs-margin-bottom-five" data-abc="true" (click)="Cancel()">Cancel</a>
+              <a class="highlight-button btn btn-medium button xs-margin-bottom-five" data-abc="true"
+                 (click)="Cancel()">{{'cancel' | translate }}</a>
             </article>
           </div>
         </div>
@@ -147,139 +161,153 @@
       <br>
 
       <div class="sidebar-content">
-      <form #SortFormMob="ngForm" (ngSubmit)="Sort(SortFormMob)">
-        <div style="padding: 1em 1vh 0 1vh;">
-          <div class="d-flex justify-content-center">
-            <select class="form-control" #sort_select="ngModel" name="sortType" [ngModel]="sortType">
-              <option value='0' selected disabled>Sort by price</option>
-              <option value='0'>None</option>
-              <option disabled>───────────</option>
-              <option value="1">From max to min</option>
-              <option value="2">From min to max</option>
-            </select>
+        <form #SortFormMob="ngForm" (ngSubmit)="Sort(SortFormMob)">
+          <div style="padding: 1em 1vh 0 1vh;">
+            <div class="d-flex justify-content-center">
+              <select class="form-control" #sort_select="ngModel" name="sortType" [ngModel]="sortType">
+                <option value='0' selected disabled>{{'sortByPrice' | translate }}</option>
+                <option value='0'>{{'none' | translate }}</option>
+                <option disabled>───────────</option>
+                <option value="1">{{'maxToMin' | translate }}</option>
+                <option value="2">{{'minToMax' | translate }}</option>
+              </select>
+            </div>
+            <div class="d-flex justify-content-center">
+              <button type="submit" class="btn btn-medium search-button"
+                      style="margin-top: 0.5em; margin-left: 2em; max-width: 90%"
+                      (click)="toggleSidebar()">{{'sort' | translate }}</button>
+            </div>
           </div>
-          <div class="d-flex justify-content-center">
-            <button type="submit" class="btn btn-medium search-button" style="margin-top: 0.5em; margin-left: 2em; max-width: 90%" (click)="toggleSidebar()">Sort</button>
-          </div>
-        </div>
-      </form>
+        </form>
 
-      <form #FilterFormMob="ngForm" (ngSubmit)="Filter(FilterFormMob)" style="width: 100%;">
-        <div class="d-flex align-items-center" style="max-width: 100vh; padding-top: 3em">
-          <div class="col-md-10">
-            <div class="card">
-              <article class="filter-group">
-                <header class="card-header">
-                  <a href="#" data-toggle="collapse" data-target="#collapse_aside1Mob" data-abc="true" aria-expanded="false" class="collapsed">
-                    <i class="icon-control fa fa-chevron-down"></i>
-                    <h6 class="title">Categories </h6>
-                  </a>
-                </header>
-                <div class="filter-content collapse" id="collapse_aside1Mob" style="">
-                  <div class="card-body">
-                    <ul class="list-menu">
-                      <li><a style="cursor: pointer;" data-abc="true" (click)="OnlyHouses()">Houses </a></li>
-                      <li><a style="cursor: pointer;" data-abc="true" (click)="OnlyFlats()">Flats </a></li>
-                    </ul>
+        <form #FilterFormMob="ngForm" (ngSubmit)="Filter(FilterFormMob)" style="width: 100%;">
+          <div class="d-flex align-items-center" style="max-width: 100vh; padding-top: 3em">
+            <div class="col-md-10">
+              <div class="card">
+                <article class="filter-group">
+                  <header class="card-header">
+                    <a href="#" data-toggle="collapse" data-target="#collapse_aside1Mob" data-abc="true"
+                       aria-expanded="false" class="collapsed">
+                      <i class="icon-control fa fa-chevron-down"></i>
+                      <h6 class="title">{{'categories' | translate }} </h6>
+                    </a>
+                  </header>
+                  <div class="filter-content collapse" id="collapse_aside1Mob" style="">
+                    <div class="card-body">
+                      <ul class="list-menu">
+                        <li><a style="cursor: pointer;" data-abc="true"
+                               (click)="OnlyHouses()">{{'houses' | translate }} </a></li>
+                        <li><a style="cursor: pointer;" data-abc="true"
+                               (click)="OnlyFlats()">{{'flats' | translate }} </a></li>
+                      </ul>
+                    </div>
                   </div>
-                </div>
-              </article>
-              <article class="filter-group">
-                <header class="card-header">
-                  <a href="#" data-toggle="collapse" data-target="#collapse_aside2Mob" data-abc="true" aria-expanded="false" class="collapsed">
-                    <i class="icon-control fa fa-chevron-down"></i>
-                    <h6 class="title">Price </h6>
-                  </a>
-                </header>
-                <div class="filter-content collapse" id="collapse_aside2Mob" style="">
-                  <div class="card-body">
-                    <div class="form-row">
-                      <div class="form-group col-md-6">
-                        <label>Min</label>
-                        <div class="dollar"><input class="form-control" type="number" #min_select="ngModel" name="minPrice" [ngModel]="minPrice"></div>
-                      </div>
-                      <div class="form-group text-right col-md-6">
-                        <label>Max</label>
-                        <div class="dollar"><input class="form-control" type="number" #max_select="ngModel" name="maxPrice" [ngModel]="maxPrice"></div>
+                </article>
+                <article class="filter-group">
+                  <header class="card-header">
+                    <a href="#" data-toggle="collapse" data-target="#collapse_aside2Mob" data-abc="true"
+                       aria-expanded="false" class="collapsed">
+                      <i class="icon-control fa fa-chevron-down"></i>
+                      <h6 class="title">{{'price' | translate }} </h6>
+                    </a>
+                  </header>
+                  <div class="filter-content collapse" id="collapse_aside2Mob" style="">
+                    <div class="card-body">
+                      <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <label>Min</label>
+                          <div class="dollar"><input class="form-control" type="number" #min_select="ngModel"
+                                                     name="minPrice" [ngModel]="minPrice"></div>
+                        </div>
+                        <div class="form-group text-right col-md-6">
+                          <label>Max</label>
+                          <div class="dollar"><input class="form-control" type="number" #max_select="ngModel"
+                                                     name="maxPrice" [ngModel]="maxPrice"></div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </article>
-              <article class="filter-group">
-                <header class="card-header">
-                  <a href="#" data-toggle="collapse" data-target="#collapse_aside3Mob" data-abc="true" aria-expanded="false" class="collapsed">
-                    <i class="icon-control fa fa-chevron-down"></i>
-                    <h6 class="title">Rooms </h6>
-                  </a>
-                </header>
-                <div class="filter-content collapse" id="collapse_aside3Mob" style="">
-                  <div class="card-body">
-                    <label class="checkbox-btn">
-                      <input type="checkbox" class="custom-checkbox" #rooms_1_select="ngModel" name="rooms_1" [ngModel]="rooms_1">
-                      <span class="btn btn-light"> 1 </span>
-                    </label>
-                    <label class="checkbox-btn">
-                      <input type="checkbox" #rooms_2_select="ngModel" name="rooms_2" [ngModel]="rooms_2">
-                      <span class="btn btn-light"> 2 </span>
-                    </label>
-                    <label class="checkbox-btn">
-                      <input type="checkbox" #rooms_3_select="ngModel" name="rooms_3" [ngModel]="rooms_3">
-                      <span class="btn btn-light"> 3 </span>
-                    </label>
-                    <label class="checkbox-btn">
-                      <input type="checkbox" #rooms_4_select="ngModel" name="rooms_4" [ngModel]="rooms_4">
-                      <span class="btn btn-light"> 4 </span>
-                    </label>
-                    <label class="checkbox-btn">
-                      <input type="checkbox" #rooms_5_select="ngModel" name="rooms_5" [ngModel]="rooms_5">
-                      <span class="btn btn-light"> 5+ </span>
-                    </label>
+                </article>
+                <article class="filter-group">
+                  <header class="card-header">
+                    <a href="#" data-toggle="collapse" data-target="#collapse_aside3Mob" data-abc="true"
+                       aria-expanded="false" class="collapsed">
+                      <i class="icon-control fa fa-chevron-down"></i>
+                      <h6 class="title">{{'roomsDet' | translate }} </h6>
+                    </a>
+                  </header>
+                  <div class="filter-content collapse" id="collapse_aside3Mob" style="">
+                    <div class="card-body">
+                      <label class="checkbox-btn">
+                        <input type="checkbox" class="custom-checkbox" #rooms_1_select="ngModel" name="rooms_1"
+                               [ngModel]="rooms_1">
+                        <span class="btn btn-light"> 1 </span>
+                      </label>
+                      <label class="checkbox-btn">
+                        <input type="checkbox" #rooms_2_select="ngModel" name="rooms_2" [ngModel]="rooms_2">
+                        <span class="btn btn-light"> 2 </span>
+                      </label>
+                      <label class="checkbox-btn">
+                        <input type="checkbox" #rooms_3_select="ngModel" name="rooms_3" [ngModel]="rooms_3">
+                        <span class="btn btn-light"> 3 </span>
+                      </label>
+                      <label class="checkbox-btn">
+                        <input type="checkbox" #rooms_4_select="ngModel" name="rooms_4" [ngModel]="rooms_4">
+                        <span class="btn btn-light"> 4 </span>
+                      </label>
+                      <label class="checkbox-btn">
+                        <input type="checkbox" #rooms_5_select="ngModel" name="rooms_5" [ngModel]="rooms_5">
+                        <span class="btn btn-light"> 5+ </span>
+                      </label>
+                    </div>
                   </div>
-                </div>
-              </article>
-              <article class="filter-group">
-                <header class="card-header">
-                  <a href="#" data-toggle="collapse" data-target="#collapse_aside4Mob" data-abc="true" aria-expanded="false" class="collapsed">
-                    <i class="icon-control fa fa-chevron-down"></i>
-                    <h6 class="title">Bathrooms </h6>
-                  </a>
-                </header>
-                <div class="filter-content collapse" id="collapse_aside4Mob" style="">
-                  <div class="card-body">
-                    <label class="checkbox-btn">
-                      <input type="checkbox" class="custom-checkbox" #bathrooms_1_select="ngModel" name="bathrooms_1" [ngModel]="bathrooms_1">
-                      <span class="btn btn-light"> 1 </span>
-                    </label>
-                    <label class="checkbox-btn">
-                      <input type="checkbox" #bathrooms_2_select="ngModel" name="bathrooms_2" [ngModel]="bathrooms_2">
-                      <span class="btn btn-light"> 2 </span>
-                    </label>
-                    <label class="checkbox-btn">
-                      <input type="checkbox" #bathrooms_3_select="ngModel" name="bathrooms_3" [ngModel]="bathrooms_3">
-                      <span class="btn btn-light"> 3 </span>
-                    </label>
-                    <label class="checkbox-btn">
-                      <input type="checkbox" #bathrooms_4_select="ngModel" name="bathrooms_4" [ngModel]="bathrooms_4">
-                      <span class="btn btn-light"> 4 </span>
-                    </label>
-                    <label class="checkbox-btn">
-                      <input type="checkbox" #bathrooms_5_select="ngModel" name="bathrooms_5" [ngModel]="bathrooms_5">
-                      <span class="btn btn-light"> 5+ </span>
-                    </label>
+                </article>
+                <article class="filter-group">
+                  <header class="card-header">
+                    <a href="#" data-toggle="collapse" data-target="#collapse_aside4Mob" data-abc="true"
+                       aria-expanded="false" class="collapsed">
+                      <i class="icon-control fa fa-chevron-down"></i>
+                      <h6 class="title">{{'bathroomsDet' | translate }} </h6>
+                    </a>
+                  </header>
+                  <div class="filter-content collapse" id="collapse_aside4Mob" style="">
+                    <div class="card-body">
+                      <label class="checkbox-btn">
+                        <input type="checkbox" class="custom-checkbox" #bathrooms_1_select="ngModel" name="bathrooms_1"
+                               [ngModel]="bathrooms_1">
+                        <span class="btn btn-light"> 1 </span>
+                      </label>
+                      <label class="checkbox-btn">
+                        <input type="checkbox" #bathrooms_2_select="ngModel" name="bathrooms_2" [ngModel]="bathrooms_2">
+                        <span class="btn btn-light"> 2 </span>
+                      </label>
+                      <label class="checkbox-btn">
+                        <input type="checkbox" #bathrooms_3_select="ngModel" name="bathrooms_3" [ngModel]="bathrooms_3">
+                        <span class="btn btn-light"> 3 </span>
+                      </label>
+                      <label class="checkbox-btn">
+                        <input type="checkbox" #bathrooms_4_select="ngModel" name="bathrooms_4" [ngModel]="bathrooms_4">
+                        <span class="btn btn-light"> 4 </span>
+                      </label>
+                      <label class="checkbox-btn">
+                        <input type="checkbox" #bathrooms_5_select="ngModel" name="bathrooms_5" [ngModel]="bathrooms_5">
+                        <span class="btn btn-light"> 5+ </span>
+                      </label>
+                    </div>
                   </div>
-                </div>
-              </article>
-              <article class="filter-group">
-                <a class="highlight-button btn btn-medium button xs-margin-bottom-five" data-abc="true" (click)="Filter(FilterFormMob); toggleSidebar()">Apply Now</a>
-              </article>
-              <article class="filter-group" style="margin-top: 0.5em;">
-                <a class="highlight-button btn btn-medium button xs-margin-bottom-five" data-abc="true" (click)="Cancel(); toggleSidebar()">Cancel</a>
-              </article>
+                </article>
+                <article class="filter-group">
+                  <a class="highlight-button btn btn-medium button xs-margin-bottom-five" data-abc="true"
+                     (click)="Filter(FilterFormMob); toggleSidebar()">{{'apply' | translate }}</a>
+                </article>
+                <article class="filter-group" style="margin-top: 0.5em;">
+                  <a class="highlight-button btn btn-medium button xs-margin-bottom-five" data-abc="true"
+                     (click)="Cancel(); toggleSidebar()">{{'cancel' | translate }}</a>
+                </article>
+              </div>
             </div>
           </div>
-        </div>
-      </form>
+        </form>
       </div>
     </div>
   </div>
@@ -289,33 +317,39 @@
       <h6>{{text}}</h6>
     </div>
 
-    <div *ngFor="let item of houses">
+    <div *ngFor="let item of housesToOut">
       <div class="d-flex justify-content-center">
-        <app-house-card style="width: 60%; max-width: 60%;" [hidden]="!isDesktop()"
-          [id] = "item.id"
-          [category]="getCategory(item.category)"
-          [country]="item.country"
-          [city]="item.city"
-          [roomsNumber]="item.roomsNumber"
-          [bathroomsNumber]="item.bathroomsNumber"
-          [price]="item.price"
-          [image]="item.photos[0]"
-          [description]="item.description">
+        <app-house-card *ngIf="isDesktop()" style="width: 60%; max-width: 60%;"
+                        [id]="item.id"
+                        [category]="item.category"
+                        [country]="item.country"
+                        [city]="item.city"
+                        [roomsNumber]="item.roomsNumber"
+                        [bathroomsNumber]="item.bathroomsNumber"
+                        [price]="item.price"
+                        [image]="item.photos[0]"
+                        [description]="item.description"
+                        [verified]="item.verified">
         </app-house-card>
-        <app-house-card style="width: 100%; max-width: 100%;" [hidden]="isDesktop()"
-          [id] = "item.id"
-          [category]="getCategory(item.category)"
-          [country]="item.country"
-          [city]="item.city"
-          [roomsNumber]="item.roomsNumber"
-          [bathroomsNumber]="item.bathroomsNumber"
-          [price]="item.price"
-          [image]="item.photos[0]"
-          [description]="item.description">
+        <app-house-card *ngIf="!isDesktop()" style="width: 100%; max-width: 100%;"
+                        [id]="item.id"
+                        [category]="item.category"
+                        [country]="item.country"
+                        [city]="item.city"
+                        [roomsNumber]="item.roomsNumber"
+                        [bathroomsNumber]="item.bathroomsNumber"
+                        [price]="item.price"
+                        [image]="item.photos[0]"
+                        [description]="item.description"
+                        [verified]="item.verified">
         </app-house-card>
       </div>
     </div>
-    <div>
+    <div class="d-flex justify-content-center">
+      <button class="btn btn-primary" style="margin: 1rem; width: 20rem;" (click)="addHouses()"
+              [hidden]="!loadMoreBtn">{{'loadMore' | translate }}</button>
+    </div>
+    <div class="d-flex justify-content-center">
       <!--<ng-adsense
         [display]="'inline-block'"
         [adFormat]="'auto'"
@@ -329,7 +363,9 @@
            data-ad-client="ca-pub-7793855420321475"
            data-ad-slot="6040528420"></ins>
       <script>
-        (window.onload = function() {(adsbygoogle = window.adsbygoogle || []).push({});});
+        (window.onload = function () {
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        });
       </script>
     </div>
   </div>

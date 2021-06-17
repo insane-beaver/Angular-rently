@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {DatabaseProviderService} from '../../services/database-provider.service';
 import {Inf} from '../../classes/Inf';
 import {House} from '../../classes/house';
@@ -14,6 +14,11 @@ export class HousesForRentComponent implements OnInit {
   constructor(private database: DatabaseProviderService) { }
 
   houses!: Array<House>;
+
+  housesToOut!: Array<House>;
+  housesToOutSize: number = 0;
+  loadMoreBtn: boolean = true;
+
   sortType: number = 0;
   text!: string;
 
@@ -43,47 +48,85 @@ export class HousesForRentComponent implements OnInit {
           if(value.city== Inf.searchCity)
             this.houses.push(value);3
         });
-        this.text = "Flats and houses in " + Inf.searchCity;
+        this.text = Inf.searchCity + ":";
       }
       else
         this.houses = Inf.houses;
+      setTimeout(() => this.addHouses(), 500);
     });
+  }
+
+  addHouses(): void {
+    this.housesToOutSize +=5;
+    let i=0;
+    this.housesToOut = new Array<House>();
+    this.houses.forEach(value => {
+      if(i<this.housesToOutSize) {
+        this.housesToOut.push(value);
+        i++;
+      }
+    });
+    if(this.housesToOutSize < this.houses.length) {
+      this.loadMoreBtn = true;
+    }
+    else
+      this.loadMoreBtn = false;
   }
 
   isDesktop() {
     return Inf.isDesktop;
   }
-  getCategory(category: number) {
-    if(category==1)
-      return "Flat"
-    else
-      return "House"
-  }
 
   Sort(form: NgForm): void {
     this.sortType = form.value.sortType;
     if(this.sortType==0) {
-      this.houses = Inf.houses;
+      this.CancelSort();
     }
     else if(this.sortType==1) {
       this.houses.sort((a,b) => (a.price > b.price) ? -1 : ((b.price > a.price) ? 1 : 0));
+      this.housesToOutSize = 0;
+      this.loadMoreBtn = true;
+      this.addHouses();
     }
     else if(this.sortType==2) {
       this.houses.sort((a,b) => (a.price > b.price) ? 1 : ((b.price > a.price) ? -1 : 0));
+      this.housesToOutSize = 0;
+      this.loadMoreBtn = true;
+      this.addHouses();
     }
+  }
+  CancelSort() {
+    this.database.getHousesPromise().then(value => {
+      this.houses = value;
+      this.housesToOutSize = 0;
+      this.loadMoreBtn = true;
+      this.addHouses();
+    });
   }
 
   OnlyHouses() {
-    this.houses.forEach(value => {
-      if(value.category!=2)
-        this.houses.splice(this.houses.indexOf(value),1);
-    })
+    this.houses = new Array<House>()
+    Inf.houses.forEach(value => {
+      if(value.category==2) {
+        this.houses.push(value);
+      }
+    });
+
+    this.housesToOutSize = 0;
+    this.loadMoreBtn = true;
+    this.addHouses();
   }
   OnlyFlats() {
-    this.houses.forEach(value => {
-      if(value.category!=1)
-        this.houses.splice(this.houses.indexOf(value),1);
-    })
+    this.houses = new Array<House>()
+    Inf.houses.forEach(value => {
+      if(value.category==1) {
+        this.houses.push(value);
+      }
+    });
+
+    this.housesToOutSize = 0;
+    this.loadMoreBtn = true;
+    this.addHouses();
   }
 
   Filter(form: NgForm): void {
@@ -106,6 +149,10 @@ export class HousesForRentComponent implements OnInit {
     this.houses = this.get_Array_After_Price(Inf.houses);
     this.houses = this.get_Array_After_Rooms(this.houses);
     this.houses = this.get_Array_After_Bathrooms(this.houses);
+
+    this.housesToOutSize = 0;
+    this.loadMoreBtn = true;
+    this.addHouses();
   }
 
   get_Array_After_Price(array: Array<House>) {
@@ -161,6 +208,10 @@ export class HousesForRentComponent implements OnInit {
   Cancel() {
     this.houses = new Array<House>();
     this.houses = Inf.houses;
+
+    this.housesToOutSize = 0;
+    this.loadMoreBtn = true;
+    this.addHouses();
 
     this.rooms_1 = false;
     this.rooms_2 = false;

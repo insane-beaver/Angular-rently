@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Inf} from '../../classes/Inf';
 import {NgForm} from '@angular/forms';
 import {Person} from '../../classes/person';
@@ -14,22 +14,24 @@ export class FaqAndHelpComponent implements OnInit {
   person!: Person;
   commentM!: string;
 
-  constructor(private database: DatabaseProviderService) { }
+  constructor(private database: DatabaseProviderService) {
+  }
 
   ngOnInit(): void {
     this.person = Inf.person;
   }
 
   getWidth() {
-    if(Inf.isDesktop)
-      return "width: 70vw;"
-    else
-      return "width: 98vw;"
+    if (Inf.isDesktop) {
+      return 'width: 70vw;';
+    } else {
+      return 'width: 98vw;';
+    }
   }
 
-  contact(form: NgForm):void {
+  contact(form: NgForm): void {
     let help: Help = new Help();
-    help.id = Date.now()+"-help";
+    help.id = Date.now() + '-help';
     help.personName = form.value.name;
     help.personEmail = form.value.email;
     help.personMobile = form.value.mobile;

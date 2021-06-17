@@ -12,4 +12,5 @@ export class House {
   bathroomsNumber!: number;
   photos: String[] = new Array<String>();
   description: string = "";
+  verified: boolean = false;
 }

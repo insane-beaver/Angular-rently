@@ -8,12 +8,14 @@
         <div class="ml-3 w-100">
           <h4 class="mb-0 mt-0">{{owner.name}}</h4>
           <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
-            <div class="d-flex flex-column"><span class="articles">Advertisements</span> <span class="number1">{{houses.length}}</span></div>
-            <div class="d-flex flex-column"><span class="rating">Clients</span> <span class="number1">{{payments.length}}</span></div>
+            <div class="d-flex flex-column"><span class="articles">{{'advertisements' | translate }}</span> <span
+              class="number1">{{houses.length}}</span></div>
+            <div class="d-flex flex-column"><span class="rating">{{'clientsNumb' | translate }}</span> <span
+              class="number1">{{payments.length}}</span></div>
           </div>
           <div class="button mt-2 d-flex flex-row align-items-center">
-            <button class="btn btn-sm btn-outline-primary w-100" (click)="call()">Call</button>
-            <button class="btn btn-sm btn-primary w-100 ml-2" (click)="write()">Write</button>
+            <button class="btn btn-sm btn-outline-primary w-100" (click)="call()">{{'call' | translate }}</button>
+            <button class="btn btn-sm btn-primary w-100 ml-2" (click)="write()">{{'write' | translate }}</button>
           </div>
         </div>
       </div>
@@ -22,27 +24,29 @@
 
   <div *ngFor="let item of houses">
     <div class="d-flex justify-content-center">
-      <app-house-card style="width: 60%; max-width: 60%;" [hidden]="!isDesktop()"
-                      [id] = "item.id"
-                      [category]="getCategory(item.category)"
+      <app-house-card *ngIf="isDesktop()" style="width: 60%; max-width: 60%;"
+                      [id]="item.id"
+                      [category]="item.category"
                       [country]="item.country"
                       [city]="item.city"
                       [roomsNumber]="item.roomsNumber"
                       [bathroomsNumber]="item.bathroomsNumber"
                       [price]="item.price"
                       [image]="item.photos[0]"
-                      [description]="item.description">
+                      [description]="item.description"
+                      [verified]="item.verified">
       </app-house-card>
-      <app-house-card style="width: 100%; max-width: 100%;" [hidden]="isDesktop()"
-                      [id] = "item.id"
-                      [category]="getCategory(item.category)"
+      <app-house-card *ngIf="!isDesktop()" style="width: 100%; max-width: 100%;"
+                      [id]="item.id"
+                      [category]="item.category"
                       [country]="item.country"
                       [city]="item.city"
                       [roomsNumber]="item.roomsNumber"
                       [bathroomsNumber]="item.bathroomsNumber"
                       [price]="item.price"
                       [image]="item.photos[0]"
-                      [description]="item.description">
+                      [description]="item.description"
+                      [verified]="item.verified">
       </app-house-card>
     </div>
   </div>

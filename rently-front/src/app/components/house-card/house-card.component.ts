@@ -11,13 +11,14 @@ export class HouseCardComponent implements OnInit {
 
   @Input('id')id!: string;
   @Input('image')image!: String;
-  @Input('category')category!: string;
+  @Input('category')category!: number;
   @Input('country')country!: string;
   @Input('city')city!: string;
   @Input('roomsNumber')roomsNumber!: number;
   @Input('bathroomsNumber')bathroomsNumber!:number;
   @Input('price')price!: number;
   @Input('description')description!: string;
+  @Input('verified')verified!: boolean;
 
 
   constructor(private router: Router) { }

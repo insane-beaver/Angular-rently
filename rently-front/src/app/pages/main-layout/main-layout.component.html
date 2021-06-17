@@ -5,9 +5,11 @@
       <div class="d-flex justify-content-start">
         <button id="menu" class="menu" (click)="toggleOverlay()" aria-label="Main Menu">
           <svg width="100" height="100" viewBox="0 0 100 100">
-            <path class="line line1" d="M 20,29.000046 H 80.000231 C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 L 25.000021,25.000058" />
-            <path class="line line2" d="M 20,50 H 80" />
-            <path class="line line3" d="M 20,70.999954 H 80.000231 C 80.000231,70.999954 94.498839,71.182648 94.532987,33.288669 94.543142,22.019327 90.966081,18.329754 85.259173,18.331003 79.552261,18.332249 75.000211,25.000058 75.000211,25.000058 L 25.000021,74.999942" />
+            <path class="line line1"
+                  d="M 20,29.000046 H 80.000231 C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 L 25.000021,25.000058"/>
+            <path class="line line2" d="M 20,50 H 80"/>
+            <path class="line line3"
+                  d="M 20,70.999954 H 80.000231 C 80.000231,70.999954 94.498839,71.182648 94.532987,33.288669 94.543142,22.019327 90.966081,18.329754 85.259173,18.331003 79.552261,18.332249 75.000211,25.000058 75.000211,25.000058 L 25.000021,74.999942"/>
           </svg>
         </button>
 
@@ -17,32 +19,47 @@
       </div>
 
       <div class="d-flex justify-content-end row">
+        <span class="form-inline" style="width: 3rem">
+          <select class="language-select" #selectedLang (change)="switchLang(selectedLang.value)">
+            <option *ngFor="let language of translate.getLangs()"
+                    [value]="language"
+                    [selected]="isSelectedLanguage(language)">
+              {{ language }}
+            </option>
+          </select>
+        </span>
+        <br>
         <div [hidden]="!getIsLogedInf()">
           <div class="btn-group dropleft">
-            <a class="btn btn-link dropdown-toggle" style="max-height: 42px; font-size: large; color: white;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Profile
+            <a class="btn btn-link dropdown-toggle" style="max-height: 42px; font-size: large; color: white;"
+               role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{'profile' | translate }}
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="font-size: medium;">
-              <a class="dropdown-item profile-a" data-toggle="modal" data-target="#Profile" (click)="setProfileData()">{{getPersonInf().name}}</a>
-              <a class="dropdown-item profile-a"(click)="LogOut()" style="color: darkred;"><u>Log out</u></a>
+              <a class="dropdown-item profile-a" data-toggle="modal" data-target="#Profile"
+                 (click)="setProfileData()">{{getPersonInf().name}}</a>
+              <a class="dropdown-item profile-a" (click)="LogOut()"
+                 style="color: darkred;"><u>{{'logOut' | translate }}</u></a>
             </div>
           </div>
         </div>
-        <button [hidden]="getIsLogedInf()" style="font-size: large" type="button" class="btn btn-link" data-toggle="modal" data-target="#SignUpModal">Sign up</button>
-        <button [hidden]="getIsLogedInf()" style="font-size: large" type="button" class="btn btn-link" data-toggle="modal" data-target="#LogInModal">Log in</button>
+        <button [hidden]="getIsLogedInf()" style="font-size: large" type="button" class="btn btn-link"
+                data-toggle="modal" data-target="#SignUpModal">{{'signUp' | translate }}</button>
+        <button [hidden]="getIsLogedInf()" style="font-size: large" type="button" class="btn btn-link"
+                data-toggle="modal" data-target="#LogInModal">{{'logIn' | translate }}</button>
       </div>
 
     </nav>
 
     <div id="mySidebar" class="sidebar" (click)="toggleOverlay()">
       <div id="sidebar-content" class="sidebar-content">
-        <a [hidden]="!getPersonInf().isOwner" routerLink="create-house">Create house</a>
-        <a [hidden]="!getPersonInf().isOwner" routerLink="my-advertisements">My houses</a>
-        <a [hidden]="!getPersonInf().isOwner" routerLink="my-clients">Clients</a>
+        <a [hidden]="!getPersonInf().isOwner" routerLink="create-house">{{'createHouse' | translate }}</a>
+        <a [hidden]="!getPersonInf().isOwner" routerLink="my-advertisements">{{'myHouses' | translate }}</a>
+        <a [hidden]="!getPersonInf().isOwner" routerLink="my-clients">{{'clients' | translate }}</a>
         <hr [hidden]="!getPersonInf().isOwner" class="solid">
-        <a routerLink="my-rents">My rents</a>
+        <a routerLink="my-rents">{{'myRents' | translate }}</a>
         <br>
-        <a routerLink="faq">FAQ</a>
+        <a routerLink="faq">{{'help' | translate }}</a>
       </div>
     </div>
   </div>
@@ -50,8 +67,10 @@
   <div class="page-content main" id="content">
     <router-outlet></router-outlet>
     <button id="scrollToTopBtn" (click)="scrollToTop()">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 20">
-        <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-up"
+           viewBox="0 0 16 20">
+        <path fill-rule="evenodd"
+              d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
       </svg>
     </button>
   </div>
@@ -60,11 +79,12 @@
 </body>
 
 <!-- Modal -->
-<div class="modal fade" id="SignUpModal" tabindex="-1" role="dialog" aria-labelledby="SignUpModalTitle" aria-hidden="true">
+<div class="modal fade" id="SignUpModal" tabindex="-1" role="dialog" aria-labelledby="SignUpModalTitle"
+     aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="SignUpModalTitle">Sign up</h5>
+        <h5 class="modal-title" id="SignUpModalTitle">{{'signUpForm' | translate }}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -73,36 +93,55 @@
         <form class="md-float-material form-material" #signUpForm="ngForm" (ngSubmit)="signUp(signUpForm)">
           <div class="auth-box card">
             <div class="card-block">
-              <div class="form-group form-primary"> <input #name1="ngModel" type="text" class="form-control" name="name" [ngModel]="name" required value="" placeholder="Display name"> </div>
-              <p [hidden]="!(name1.touched && name1.invalid)" class="invalid">*Must be filled</p>
-              <div class="form-group form-primary"> <input #email_input1="ngModel" type="email" class="form-control" name="email" [ngModel]="email" required email value="" placeholder="Email"> </div>
-              <p [hidden]="!(email_input1.touched && email_input1.invalid)" class="invalid">*Must be filled as email (for example: your_email@email.com)</p>
-              <div class="form-group form-primary"> <input #password_input1="ngModel" type="password" class="form-control" name="password" [ngModel]="password" required minlength="6" placeholder="Password" value=""> </div>
-              <p [hidden]="!(password_input1.touched && password_input1.invalid)" class="invalid">*Must contain at least 6 characters</p>
+              <div class="form-group form-primary"><input #name1="ngModel" type="text" class="form-control" name="name"
+                                                          [ngModel]="name" required value=""
+                                                          placeholder="{{'displayName' | translate }}"></div>
+              <p [hidden]="!(name1.touched && name1.invalid)" class="invalid">*{{'mustBeFilled' | translate }}</p>
+              <div class="form-group form-primary"><input #email_input1="ngModel" type="email" class="form-control"
+                                                          name="email" [ngModel]="email" required email value=""
+                                                          placeholder="Email"></div>
+              <p [hidden]="!(email_input1.touched && email_input1.invalid)" class="invalid">
+                *{{'mustBeFilledEmail' | translate }}</p>
+              <div class="form-group form-primary"><input #password_input1="ngModel" type="password"
+                                                          class="form-control" name="password" [ngModel]="password"
+                                                          required minlength="6"
+                                                          placeholder="{{'password' | translate }}" value=""></div>
+              <p [hidden]="!(password_input1.touched && password_input1.invalid)" class="invalid">
+                *{{'mustBeFilledPassword' | translate }}</p>
               <div class="form-group form-primary">
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" style="width: 18px; height: 18px;" value="false" #eula="ngModel" name="eula" [ngModel]="agrrEula" required>
+                  <input class="form-check-input" type="checkbox" style="width: 18px; height: 18px;" value="false"
+                         #eula="ngModel" name="eula" [ngModel]="agrrEula" required>
                   <a>
-                    <label class="form-check-label ml-1" (click)="eulaCheck()">Agree to&nbsp;</label>
+                    <label class="form-check-label ml-1" (click)="eulaCheck()">{{'agreeTo' | translate }}&nbsp;</label>
                     <app-eula></app-eula>
                   </a>
-                  <p [hidden]="eula.valid" class="invalid" style="color: black;">*You mast agree to our terms and conditions</p>
+                  <p [hidden]="eula.valid" class="invalid" style="color: black;">*{{'youMustAgree' | translate }}</p>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-12" data-dismiss="modal">
-                  <input type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20" (click)="signUp(signUpForm)" [disabled]="!signUpForm.valid" name="submit" value="Sign up Now">
+                  <input type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20"
+                         (click)="signUp(signUpForm)" [disabled]="!signUpForm.valid" name="submit"
+                         value="{{'signUpNow' | translate }}">
                 </div>
               </div>
               <div class="or-container">
                 <div class="line-separator"></div>
-                <div class="or-label">or</div>
+                <div class="or-label">{{'or' | translate }}</div>
                 <div class="line-separator"></div>
               </div>
               <div class="row">
-                <div class="col-md-12"> <a class="btn btn-lg btn-google btn-block text-uppercase btn-outline" (click)="authService.GoogleSignUp()" data-dismiss="modal"><img src="https://img.icons8.com/color/16/000000/google-logo.png"> Sign up with Google</a> </div>
-              </div> <br>
-              <p class="text-inverse text-center">Already have an account? <a href="<?= base_url() ?>auth/login" data-abc="true" data-dismiss="modal" data-toggle="modal" data-target="#LogInModal">Log in</a></p>
+                <div class="col-md-12"><a class="btn btn-lg btn-google btn-block text-uppercase btn-outline"
+                                          (click)="authService.GoogleSignUp()" data-dismiss="modal"><img
+                  src="https://img.icons8.com/color/16/000000/google-logo.png"> {{'SignUpG' | translate }}</a></div>
+              </div>
+              <br>
+              <p class="text-inverse text-center">{{'haveAccount' | translate }} <a href="<?= base_url() ?>auth/login"
+                                                                                    data-abc="true" data-dismiss="modal"
+                                                                                    data-toggle="modal"
+                                                                                    data-target="#LogInModal">{{'logIn' | translate }}</a>
+              </p>
             </div>
           </div>
         </form>
@@ -112,11 +151,12 @@
 </div>
 
 
-<div class="modal fade" id="LogInModal" tabindex="-1" role="dialog" aria-labelledby="LogInModalTitle" aria-hidden="true">
+<div class="modal fade" id="LogInModal" tabindex="-1" role="dialog" aria-labelledby="LogInModalTitle"
+     aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="LogInModalTitle">Log in</h5>
+        <h5 class="modal-title" id="LogInModalTitle">{{'logInForm' | translate }}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -125,24 +165,37 @@
         <form class="md-float-material form-material" #logInForm="ngForm" (ngSubmit)="logIn(logInForm)">
           <div class="auth-box card">
             <div class="card-block">
-              <div class="form-group form-primary"> <input #email_input="ngModel" type="email" class="form-control" name="email" [ngModel]="email" required email value="" placeholder="Email"> </div>
-              <p [hidden]="!(email_input.touched && email_input.invalid)" class="invalid">*Must be filled as email (for example: your_email@email.com)</p>
-              <div class="form-group form-primary"> <input #password_input="ngModel" type="password" class="form-control" name="password" [ngModel]="password" required minlength="6" placeholder="Password" value=""> </div>
-              <p [hidden]="!(password_input.touched && password_input.invalid)" class="invalid">*Must contain at least 6 characters</p>
+              <div class="form-group form-primary"><input #email_input="ngModel" type="email" class="form-control"
+                                                          name="email" [ngModel]="email" required email value=""
+                                                          placeholder="Email"></div>
+              <p [hidden]="!(email_input.touched && email_input.invalid)" class="invalid">
+                *{{'mustBeFilledEmail' | translate }}</p>
+              <div class="form-group form-primary"><input #password_input="ngModel" type="password" class="form-control"
+                                                          name="password" [ngModel]="password" required minlength="6"
+                                                          placeholder="{{'password' | translate }}" value=""></div>
+              <p [hidden]="!(password_input.touched && password_input.invalid)" class="invalid">
+                *{{'mustBeFilledPassword' | translate }}</p>
               <div class="row">
                 <div class="col-md-12" data-dismiss="modal">
-                  <input type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20" (click)="logIn(logInForm)" [disabled]="!logInForm.valid" name="submit" value="Log in Now">
+                  <input type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20"
+                         (click)="logIn(logInForm)" [disabled]="!logInForm.valid" name="submit"
+                         value="{{'logInNow' | translate }}">
                 </div>
               </div>
               <div class="or-container">
                 <div class="line-separator"></div>
-                <div class="or-label">or</div>
+                <div class="or-label">{{'or' | translate }}</div>
                 <div class="line-separator"></div>
               </div>
               <div class="row">
-                <div class="col-md-12"> <a class="btn btn-lg btn-google btn-block text-uppercase btn-outline" (click)="authService.GoogleLogIn()" data-dismiss="modal"><img src="https://img.icons8.com/color/16/000000/google-logo.png"> Log in with Google</a> </div>
-              </div> <br>
-              <p class="text-inverse text-center">Don`t have account yet? <a href="<?= base_url() ?>auth/login" data-abc="true" data-dismiss="modal" data-toggle="modal" data-target="#SignUpModal">Sign up</a></p>
+                <div class="col-md-12"><a class="btn btn-lg btn-google btn-block text-uppercase btn-outline"
+                                          (click)="authService.GoogleLogIn()" data-dismiss="modal"><img
+                  src="https://img.icons8.com/color/16/000000/google-logo.png">{{'logInG' | translate }}</a></div>
+              </div>
+              <br>
+              <p class="text-inverse text-center">{{'dontHaveAccount' | translate }} <a
+                href="<?= base_url() ?>auth/login" data-abc="true" data-dismiss="modal" data-toggle="modal"
+                data-target="#SignUpModal">{{'signUp' | translate }}</a></p>
             </div>
           </div>
         </form>
@@ -155,7 +208,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="ProfileTitle">My Profile</h5>
+        <h5 class="modal-title" id="ProfileTitle">{{'myProfile' | translate }}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -164,33 +217,50 @@
         <form class="md-float-material form-material" #profileForm="ngForm" (ngSubmit)="updateProfile(profileForm)">
           <div class="auth-box card">
             <div class="card-block">
-              <div class="form-group form-primary"> <input #name2="ngModel" type="text" class="form-control" name="name" [ngModel]="name" required value="" placeholder="Display name"> </div>
-              <p [hidden]="!(name2.touched && name2.invalid)" class="invalid">*Must be filled</p>
+              <div class="form-group form-primary"><input #name2="ngModel" type="text" class="form-control" name="name"
+                                                          [ngModel]="name" required value=""
+                                                          placeholder="{{'displayName' | translate }}"></div>
+              <p [hidden]="!(name2.touched && name2.invalid)" class="invalid">*{{'mustBeFilled' | translate }}</p>
 
-              <div class="form-group form-primary"> <input #email_input2="ngModel" type="email" class="form-control" name="email" [ngModel]="email" required email value="" placeholder="Email"> </div>
-              <p [hidden]="!(email_input2.touched && email_input2.invalid)" class="invalid">*Must be filled as email (for example: your_email@email.com)</p>
+              <div class="form-group form-primary"><input #email_input2="ngModel" type="email" class="form-control"
+                                                          name="email" [ngModel]="email" required email value=""
+                                                          placeholder="Email"></div>
+              <p [hidden]="!(email_input2.touched && email_input2.invalid)" class="invalid">
+                *{{'mustBeFilledEmail' | translate }}</p>
 
-              <div class="form-group form-primary"> <input #mobile_input="ngModel" type="tel" class="form-control" name="mobile" [ngModel]="mobile" (input)="validateMobile(mobile_input)" mask="000-000-000" required pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" value="" placeholder="Phone number"> </div>
-              <p [hidden]="!(mobile_input.touched && mobile_input.invalid)" class="invalid">*Must be filled as phone number (for example: 123-456-7890)</p>
+              <div class="form-group form-primary"><input #mobile_input="ngModel" type="tel" class="form-control"
+                                                          name="mobile" [ngModel]="mobile"
+                                                          (input)="validateMobile(mobile_input)" mask="000-000-000"
+                                                          required pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" value=""
+                                                          placeholder="{{'phoneNumber' | translate }}"></div>
+              <p [hidden]="!(mobile_input.touched && mobile_input.invalid)" class="invalid">
+                *{{'mustBeFilledPhone' | translate }}</p>
 
               <div class="form-group form-primary">
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" style="height: 2vh; width: 2vh;" value="false" id="isOwner2" name="isOwner" [ngModel]="isOwner">
+                  <input class="form-check-input" type="checkbox" style="height: 2vh; width: 2vh;" value="false"
+                         id="isOwner2" name="isOwner" [ngModel]="isOwner">
                   <label class="form-check-label" for="isOwner2" style="font-size: medium">
-                    I`m house/flat owner
+                    {{'imOwner' | translate }}
                   </label>
                 </div>
               </div>
-              <div id="recaptcha-container" class="d-flex justify-content-center" style="margin-top: 1vh; margin-bottom: 1vh;"></div>
+              <div id="recaptcha-container" class="d-flex justify-content-center"
+                   style="margin-top: 1vh; margin-bottom: 1vh;"></div>
               <div class="row">
                 <div class="col-md-12">
-                  <button class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20" (click)="updateProfile(profileForm)" [disabled]="!profileForm.valid" name="submit">Update profile</button>
+                  <button class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20"
+                          (click)="updateProfile(profileForm)" [disabled]="!profileForm.valid"
+                          name="submit">{{'updateProfile' | translate }}</button>
                 </div>
               </div>
               <div class="d-flex justify-content-center" style="margin-top: 1vh; margin-bottom: 1vh;">
-                <div id="verification-code" class="row" style= "display: none; max-width: 25rem;">
-                  <input class="form-control" style="max-width: 10rem;" type="number" placeholder="Verification Code" #verificationCode="ngModel" name="verificationCode" [ngModel]="verCode">
-                  <button class="btn btn-primary" data-dismiss="modal" (click)="authService.UpdateProfile2(verificationCode)">Verify</button>
+                <div id="verification-code" class="row" style="display: none; max-width: 25rem;">
+                  <input class="form-control" style="max-width: 10rem;" type="number"
+                         placeholder="{{'verificationCode' | translate }}" #verificationCode="ngModel"
+                         name="verificationCode" [ngModel]="verCode">
+                  <button class="btn btn-primary" data-dismiss="modal"
+                          (click)="authService.UpdateProfile2(verificationCode)">{{'verify' | translate }}</button>
                 </div>
               </div>
             </div>

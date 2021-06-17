@@ -1,5 +1,5 @@
 //Imports:
-
+@import "node_modules/bootstrap/scss/bootstrap"
 
 //Global variables:
 $dark-blue: #151f28
@@ -19,3 +19,13 @@ select
   background: white url("C:/Users/Olexa/GitHub/rently/rently-front/src/assets/chevron-down.svg") no-repeat right center
   color: #000000
   border: 1px solid #000000
+
+.btn-primary
+  @include button-variant($orange, darken($orange, 7.5%), darken($orange, 10%), lighten($orange,5%), lighten($orange, 10%), darken($orange,30%))
+.btn-outline-primary
+  @include button-outline-variant($orange, #222222, lighten($orange,5%), $orange)
+
+.btn-secondary
+  @include button-variant($light-blue, darken($light-blue, 7.5%), darken($light-blue, 10%), lighten($light-blue,5%), lighten($light-blue, 10%), darken($orange,30%))
+.btn-outline-secondary
+  @include button-outline-variant($light-blue, #222222, lighten($light-blue,5%), $light-blue)

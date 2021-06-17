@@ -4,12 +4,13 @@
     <div class="d-flex align-items-center justify-content-center group-back input-group mb-3">
       <div class="input-group input-group-lg">
         <select class="form-control search-input" #city="ngModel" name="city" [ngModel]="selectedCity">
-          <option value='0' selected disabled>Select city here</option>
-          <option value='0'>None</option>
+          <option value='0' selected disabled>{{'selectCity' | translate }}</option>
+          <option value='0'>{{'none' | translate }}</option>
           <option disabled>──────────────────────────────</option>
           <option [value]="city" *ngFor="let city of cities">{{city}}</option>
         </select>
-        <button type="button" class="btn btn-lg search-button" (click)="searchHouse(mySearchForm)">Search</button>
+        <button type="button" class="btn btn-lg search-button"
+                (click)="searchHouse(mySearchForm)">{{'search' | translate }}</button>
       </div>
     </div>
   </form>
@@ -18,12 +19,13 @@
     <div class="d-row align-items-center group-back input-group mb-3" style="{{getWidth()}}">
       <div class="input-group input-group-lg">
         <select class="form-control search-input" #city1="ngModel" name="city1" [ngModel]="selectedCity1">
-          <option value='0' selected disabled>Select city here</option>
-          <option value='0'>None</option>
+          <option value='0' selected disabled>{{'selectCity' | translate }}</option>
+          <option value='0'>{{'none' | translate }}</option>
           <option disabled>─────────────</option>
           <option [value]="city" *ngFor="let city of cities">{{city}}</option>
         </select>
-        <button type="button" class="btn btn-lg search-button" (click)="searchHouseMobile(mySearchForm1)">Search</button>
+        <button type="button" class="btn btn-lg search-button"
+                (click)="searchHouseMobile(mySearchForm1)">{{'search' | translate }}</button>
       </div>
     </div>
   </form>

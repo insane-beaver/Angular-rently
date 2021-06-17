@@ -1,4 +1,7 @@
 <div class="main-content">
+  <div *ngIf="payments.length<1" class="d-flex justify-content-center" style="padding-top: 2rem;">
+    <h4>{{'noRents' | translate }}</h4>
+  </div>
   <div class="d-flex justify-content-center" *ngFor="let item of payments">
     <div class="card text-center" style="margin-top: 2rem; width: 40em">
       <div class="card-header">
@@ -13,7 +16,6 @@
           <br>
           ${{item.totalPrice}}
         </p>
-        <!--<a href="#" class="btn btn-primary">Go somewhere</a>-->
       </div>
       <div class="card-footer text-muted">
         {{item.date}}
