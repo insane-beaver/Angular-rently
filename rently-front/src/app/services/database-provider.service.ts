@@ -145,6 +145,23 @@ export class DatabaseProviderService {
       }
     })
   }
+  public async getHousesForOwnerPromise(): Promise<House[]> {
+    return new Promise<House[]>((resolve) => {
+      Inf.houses = new Array<House>();
+      let was:boolean = false;
+      this.house_subscription = this.houses.subscribe(value => {
+        if(!was) {
+          was = true;
+
+          for (let i in value) {
+            if(value[i].ownerId == Inf.person.id)
+              Inf.houses.push((value[i] as House));
+          }
+          resolve(Inf.houses);
+        }
+      });
+    })
+  }
   public getHouse(id: string) {
     let house: House = new House();
     for(let item of Inf.houses) {

@@ -75,6 +75,9 @@
   "delete": "Delete",
   "edit": "Edit",
   "angryGabe": "Payment commission is",
+  "mostPopularMonths": "Most popular months:",
+  "rentsInMonth": "Rents in month",
+  "income": "Income:",
 
   "category": "Category",
   "roomsDet": "Rooms",

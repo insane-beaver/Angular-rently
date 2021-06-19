@@ -43,6 +43,9 @@ import { RentsListComponent } from './pages/rents-list/rents-list.component';
 import { ClientsComponent } from './pages/clients/clients.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 
+/*CHARTS*/
+import { ChartsModule } from 'ng2-charts';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -83,7 +86,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
       }),
       GooglePayButtonModule,
       NgxPayPalModule,
-      GooglePlaceModule
+      GooglePlaceModule,
+      ChartsModule
     ],
   providers: [LocalStorageService],
   bootstrap: [AppComponent]

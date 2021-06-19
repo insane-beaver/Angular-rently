@@ -33,4 +33,17 @@
       </div>
     </div>
   </div>
+
+  <div class="d-flex justify-content-center" style="padding: 1em;">
+    <div class="form-group">
+      <label>{{'income' | translate }}</label>
+      <div class="chart-wrapper chart">
+        <canvas baseChart
+                [data]="doughnutChartData"
+                [labels]="doughnutChartLabels"
+                [chartType]="doughnutChartType">
+        </canvas>
+      </div>
+    </div>
+  </div>
 </div>

@@ -8,6 +8,11 @@ import firebase from 'firebase/app';
 import {GooglePlaceDirective} from 'ngx-google-places-autocomplete';
 import {Address} from 'ngx-google-places-autocomplete/objects/address';
 
+import {ChartOptions, ChartType, ChartDataSets} from 'chart.js';
+import {Label} from 'ng2-charts';
+import {Payment} from '../../classes/payment';
+import {TranslateService} from '@ngx-translate/core';
+
 @Component({
   selector: 'app-create-house',
   templateUrl: './create-house.component.html',
@@ -15,8 +20,18 @@ import {Address} from 'ngx-google-places-autocomplete/objects/address';
 })
 export class CreateHouseComponent implements OnInit {
 
-  constructor(private router: Router, private route: ActivatedRoute, private database: DatabaseProviderService) {
+  constructor(private router: Router, private route: ActivatedRoute, private database: DatabaseProviderService, public translate: TranslateService) {
   }
+
+  barChartOptions: ChartOptions = {
+    responsive: true,
+  };
+  barChartLabels: Label[] = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+  barChartType: ChartType = 'bar';
+  barChartLegend = true;
+  barChartPlugins = [];
+
+  barChartData: ChartDataSets[] = [{data: [], label: ''}];
 
   house: House = new House();
   isNewHouse = true;
@@ -31,6 +46,27 @@ export class CreateHouseComponent implements OnInit {
       this.house = new House();
       if (params.id) {
         this.house = this.database.getHouse(params.id);
+
+        this.database.getPaymentsFor(this.house.id).then(payments => {
+          let data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+          payments.forEach(payment => {
+            if (payment.startMonth <= payment.endMonth) {
+              for (let i = payment.startMonth; i <= payment.endMonth; ++i) {
+                data[i - 1] += 1;
+              }
+            } else if (payment.endMonth <= payment.startMonth) {
+              for (let i = payment.startMonth; i <= 12; ++i) {
+                data[i - 1] += 1;
+              }
+              for (let i = 1; i <= payment.endMonth; ++i) {
+                data[i - 1] += 1;
+              }
+            }
+          });
+          setTimeout(() => {
+            this.barChartData = [{data: data, label: this.translate.instant('rentsInMonth')}];
+          }, 100);
+        });
         this.isNewHouse = false;
       } else {
         this.isNewHouse = true;

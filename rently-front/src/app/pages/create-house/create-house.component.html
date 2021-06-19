@@ -135,4 +135,20 @@
       </div>
     </div>
   </div>
+
+  <div *ngIf="!isNewHouse" class="d-flex justify-content-center" style="padding: 1em;">
+    <div class="form-group">
+      <label>{{'mostPopularMonths' | translate }}</label>
+      <div class="chart-wrapper chart">
+        <canvas baseChart
+                [datasets]="barChartData"
+                [labels]="barChartLabels"
+                [options]="barChartOptions"
+                [plugins]="barChartPlugins"
+                [legend]="barChartLegend"
+                [chartType]="barChartType">
+        </canvas>
+      </div>
+    </div>
+  </div>
 </div>
